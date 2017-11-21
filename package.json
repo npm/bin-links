@@ -36,7 +36,9 @@
     "slide": "^1.1.6"
   },
   "devDependencies": {
+    "mkdirp": "^0.5.1",
     "nyc": "^11.1.0",
+    "rimraf": "^2.6.2",
     "standard": "^10.0.3",
     "standard-version": "^4.2.0",
     "tap": "^10.7.2",
