@@ -8,10 +8,9 @@ const cmdShimIfExists = BB.promisify(require('cmd-shim').ifExists)
 const open = BB.promisify(fs.open)
 const close = BB.promisify(fs.close)
 const read = BB.promisify(fs.read, {multiArgs: true})
-const stat = BB.promisify(fs.stat)
 const chmod = BB.promisify(fs.chmod)
-const Transform = require('stream').Transform
-const fsWriteStreamAtomic = require('fs-write-stream-atomic')
+const readFile = BB.promisify(fs.readFile)
+const writeFileAtomic = BB.promisify(require('write-file-atomic'))
 
 module.exports = BB.promisify(binLinks)
 
@@ -55,39 +54,8 @@ function hasCR (buf) {
 }
 
 function dos2Unix (file) {
-  return stat(file).then((stats) => {
-    let previousChunkEndedInCR = false
-    return new BB((resolve, reject) => {
-      fs.createReadStream(file)
-        .on('error', reject)
-        .pipe(new Transform({
-          transform: function (chunk, encoding, done) {
-            let data = chunk.toString()
-            if (previousChunkEndedInCR) {
-              data = '\r' + data
-            }
-            if (data[data.length - 1] === '\r') {
-              data = data.slice(0, -1)
-              previousChunkEndedInCR = true
-            } else {
-              previousChunkEndedInCR = false
-            }
-            done(null, data.replace(/\r\n/g, '\n'))
-          },
-          flush: function (done) {
-            if (previousChunkEndedInCR) {
-              this.push('\r')
-            }
-            done()
-          }
-        }))
-        .on('error', reject)
-        .pipe(fsWriteStreamAtomic(file))
-        .on('error', reject)
-        .on('finish', function () {
-          resolve(chmod(file, stats.mode))
-        })
-    })
+  return readFile(file, 'utf8').then(content => {
+    return writeFileAtomic(file, content.replace(/\r\n/g, '\n'))
   })
 }
 

@@ -30,9 +30,9 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "cmd-shim": "^2.0.2",
-    "fs-write-stream-atomic": "^1.0.10",
     "gentle-fs": "^2.0.0",
-    "graceful-fs": "^4.1.11"
+    "graceful-fs": "^4.1.11",
+    "write-file-atomic": "^2.3.0"
   },
   "devDependencies": {
     "mkdirp": "^0.5.1",
