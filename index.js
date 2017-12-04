@@ -55,7 +55,7 @@ function hasCR (buf) {
 
 function dos2Unix (file) {
   return readFile(file, 'utf8').then(content => {
-    return writeFileAtomic(file, content.replace(/\r\n/g, '\n'))
+    return writeFileAtomic(file, content.replace(/^(#![^\n]+)\r\n/, '$1\n'))
   })
 }
 

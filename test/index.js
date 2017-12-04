@@ -68,13 +68,17 @@ test('converts windows newlines correctly', function (t) {
       existsSync(path.resolve(folder, 'node_modules/.bin/nohashbang')),
       'nohashbang installed'
     )
-    t.notLike(
-      fs.readFileSync(
-        path.resolve(folder, 'node_modules/cli-dependency/hashbang.js'),
-        'utf8'
-      ), /\r\n/,
-      'hashbang dependency cli newlines converted'
+    const content = fs.readFileSync(
+      path.resolve(folder, 'node_modules/cli-dependency/hashbang.js'),
+      'utf8'
     )
+    t.notLike(content, /^#![^\n]+\r\n/,
+      'hashbang dependency cli shebang newlines converted'
+    )
+    t.like(content, /\r\n/,
+      'hashbang dependency cli non-shebang newlines retained'
+    )
+
     t.like(
       fs.readFileSync(
         path.resolve(folder, 'node_modules/cli-dependency/hashbang-nocr.js'),
