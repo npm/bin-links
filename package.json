@@ -32,8 +32,7 @@
     "cmd-shim": "^2.0.2",
     "fs-write-stream-atomic": "^1.0.10",
     "gentle-fs": "^2.0.0",
-    "graceful-fs": "^4.1.11",
-    "slide": "^1.1.6"
+    "graceful-fs": "^4.1.11"
   },
   "devDependencies": {
     "mkdirp": "^0.5.1",
