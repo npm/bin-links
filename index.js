@@ -36,14 +36,10 @@ function binLinks (pkg, folder, global, opts, cb) {
 }
 
 function isHashbangFile (file) {
-  return open(file, 'r').then((fileHandle) => {
-    return new BB((resolve, reject) => {
-      fs.read(fileHandle, Buffer.from(new Array(2)), 0, 2, 0, function (err, bytesRead, buffer) {
-        close(fileHandle).then(() => {
-          resolve(!err && buffer.toString() === '#!')
-        }).catch(reject)
-      })
-    })
+  return open(file, 'r').then(fileHandle => {
+    return read(fileHandle, Buffer.alloc(2), 0, 2, 0)
+      .finally(() => close(fileHandle))
+      .spread((_, buffer) => buffer.toString() === '#!', () => false)
   })
 }
 
