@@ -37,10 +37,21 @@ function binLinks (pkg, folder, global, opts, cb) {
 
 function isHashbangFile (file) {
   return open(file, 'r').then(fileHandle => {
-    return read(fileHandle, Buffer.alloc(2), 0, 2, 0)
+    return read(fileHandle, Buffer.alloc(2), 0, 2, 0).spread((_, buf) => {
+      if (!hasHashbang(buf)) return []
+      return read(fileHandle, Buffer.alloc(2048), 0, 2048, 0)
+    }).spread((_, buf) => buf && hasCR(buf), () => false)
       .finally(() => close(fileHandle))
-      .spread((_, buffer) => buffer.toString() === '#!', () => false)
-  })
+  }).catch(() => false)
+}
+
+function hasHashbang (buf) {
+  const str = buf.toString()
+  return str.slice(0, 2) === '#!'
+}
+
+function hasCR (buf) {
+  return /^#![^\n]+\r\n/.test(buf)
 }
 
 function dos2Unix (file) {
