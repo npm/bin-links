@@ -22,7 +22,8 @@ const pkg = {
   version: '0.0.0',
   bin: {
     hashbang: './hashbang.js',
-    nohashbang: './nohashbang.js'
+    nohashbang: './nohashbang.js',
+    'hashbang-nocr': './hashbang-nocr.js'
   }
 }
 
@@ -37,6 +38,10 @@ test('converts windows newlines correctly', function (t) {
   fs.writeFileSync(
     path.join(pkgFolder, 'hashbang.js'),
     '#!/usr/bin/env node\r\nconsole.log(\'Hello, world!\')\r\n'
+  )
+  fs.writeFileSync(
+    path.join(pkgFolder, 'hashbang-nocr.js'),
+    '#!/usr/bin/env node\nconsole.log(\'Hello, world!\')\r\n'
   )
   fs.writeFileSync(
     path.join(pkgFolder, 'nohashbang.js'),
@@ -56,21 +61,36 @@ test('converts windows newlines correctly', function (t) {
       'hashbang installed'
     )
     t.ok(
+      existsSync(path.resolve(folder, 'node_modules/.bin/hashbang-nocr')),
+      'hashbang installed'
+    )
+    t.ok(
       existsSync(path.resolve(folder, 'node_modules/.bin/nohashbang')),
       'nohashbang installed'
     )
-    t.notOk(
-      fs.readFileSync(
-        path.resolve(folder, 'node_modules/cli-dependency/hashbang.js'),
-        'utf8'
-      ).includes('\r\n'),
-      'hashbang dependency cli newlines converted'
+    const content = fs.readFileSync(
+      path.resolve(folder, 'node_modules/cli-dependency/hashbang.js'),
+      'utf8'
     )
-    t.ok(
+    t.notLike(content, /^#![^\n]+\r\n/,
+      'hashbang dependency cli shebang newlines converted'
+    )
+    t.like(content, /\r\n/,
+      'hashbang dependency cli non-shebang newlines retained'
+    )
+
+    t.like(
+      fs.readFileSync(
+        path.resolve(folder, 'node_modules/cli-dependency/hashbang-nocr.js'),
+        'utf8'
+      ), /\r\n/,
+      'hashbang-nocr dependency cli newlines retained'
+    )
+    t.like(
       fs.readFileSync(
         path.resolve(folder, 'node_modules/cli-dependency/nohashbang.js'),
         'utf8'
-      ).includes('\r\n'),
+      ), /\r\n/,
       'nohashbang dependency cli newlines retained'
     )
   })
