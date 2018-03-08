@@ -28,7 +28,7 @@ function binLinks (pkg, folder, global, opts, cb) {
   if (gnm) opts.log.silly('linkStuff', opts.pkgId, 'is installed into a global node_modules')
   if (gtop) opts.log.silly('linkStuff', opts.pkgId, 'is installed into the top-level global node_modules')
 
-  BB.join(
+  return BB.join(
     linkBins(pkg, folder, parent, gtop, opts),
     linkMans(pkg, folder, parent, gtop, opts)
   ).asCallback(cb)
@@ -130,7 +130,7 @@ function linkMans (pkg, folder, parent, gtop, opts) {
     return set[path.basename(man)] === man
   })
 
-  BB.map(manpages, man => {
+  return BB.map(manpages, man => {
     if (typeof man !== 'string') return
     opts.log.silly('linkMans', 'preparing to link', man)
     var parseMan = man.match(/(.*\.([0-9]+)(\.gz)?)$/)
