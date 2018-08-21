@@ -115,9 +115,11 @@ function linkBin (from, to, opts) {
 }
 
 function linkMans (pkg, folder, parent, gtop, opts) {
-  if (!pkg.man || !gtop || process.platform === 'win32') return
+  if (!pkg.man || process.platform === 'win32' ||
+      (!gtop && path.basename(parent) !== 'node_modules')) return
 
-  var manRoot = path.resolve(opts.prefix, 'share', 'man')
+  var manRoot = gtop ? path.resolve(opts.prefix, 'share', 'man')
+                     : path.resolve(parent, '.man')
   opts.log.verbose('linkMans', 'man files are', pkg.man, 'in', manRoot)
 
   // make sure that the mans are unique.
