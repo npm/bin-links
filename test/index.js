@@ -24,12 +24,18 @@ const pkg = {
     hashbang: './hashbang.js',
     nohashbang: './nohashbang.js',
     'hashbang-nocr': './hashbang-nocr.js'
+  },
+  hooks: {
+    hashbang: './hashbang.js',
+    nohashbang: './nohashbang.js',
+    'hashbang-nocr': './hashbang-nocr.js'
   }
 }
 
 const folder = path.join(__dirname, '..', 'fixtures', 'convert-windows-newlines')
 const nodeModulesFolder = path.join(folder, 'node_modules')
 const pkgFolder = path.join(nodeModulesFolder, pkg.name)
+console.log({pkgFolder})
 
 test('converts windows newlines correctly', function (t) {
   cleanup()
@@ -66,6 +72,18 @@ test('converts windows newlines correctly', function (t) {
     )
     t.ok(
       existsSync(path.resolve(folder, 'node_modules/.bin/nohashbang')),
+      'nohashbang installed'
+    )
+    t.ok(
+      existsSync(path.resolve(folder, 'node_modules/.hooks/hashbang')),
+      'hashbang installed'
+    )
+    t.ok(
+      existsSync(path.resolve(folder, 'node_modules/.hooks/hashbang-nocr')),
+      'hashbang installed'
+    )
+    t.ok(
+      existsSync(path.resolve(folder, 'node_modules/.hooks/nohashbang')),
       'nohashbang installed'
     )
     const content = fs.readFileSync(

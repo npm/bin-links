@@ -25,6 +25,8 @@ binaries and man pages for Javascript packages
 
 * Links bin files listed under the `bin` property of pkg to the node_modules/.bin
 directory of the installing environment.
+* Links bin files listed under the `hooks` property of pkg to the node_modules/.hooks
+directory of the installing environment.
 * Links man files listed under the `man` property of pkg to the share/man directory
 of the provided optional directory prefix.
 

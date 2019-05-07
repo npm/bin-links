@@ -30,6 +30,7 @@ function binLinks (pkg, folder, global, opts, cb) {
 
   return BB.join(
     linkBins(pkg, folder, parent, gtop, opts),
+    linkHooks(pkg, folder, parent, gtop, opts),
     linkMans(pkg, folder, parent, gtop, opts)
   ).asCallback(cb)
 }
@@ -67,15 +68,32 @@ function linkBins (pkg, folder, parent, gtop, opts) {
   if (!pkg.bin || (!gtop && path.basename(parent) !== 'node_modules')) {
     return
   }
-  var linkOpts = getLinkOpts(opts, gtop && folder)
-  var execMode = parseInt('0777', 8) & (~opts.umask)
   var binRoot = gtop ? opts.globalBin
                      : path.resolve(parent, '.bin')
   opts.log.verbose('linkBins', [pkg.bin, binRoot, gtop])
 
-  return BB.map(Object.keys(pkg.bin), bin => {
-    var dest = path.resolve(binRoot, bin)
-    var src = path.resolve(folder, pkg.bin[bin])
+  return linkScripts(pkg.bin, binRoot, folder, gtop, opts)
+}
+
+function linkHooks (pkg, folder, parent, gtop, opts) {
+  // Don't link hooks for global packages
+  if (!pkg.hooks || path.basename(parent) !== 'node_modules' || gtop) {
+    return
+  }
+
+  var hooksRoot = path.resolve(parent, '.hooks')
+  opts.log.verbose('linkHooks', [pkg.hooks, hooksRoot, gtop])
+
+  return linkScripts(pkg.hooks, hooksRoot, folder, gtop, opts)
+}
+
+function linkScripts (scripts, scriptRoot, folder, gtop, opts) {
+  var linkOpts = getLinkOpts(opts, gtop && folder)
+  var execMode = parseInt('0777', 8) & (~opts.umask)
+
+  return BB.map(Object.entries(scripts), ([name, filePath]) => {
+    var dest = path.resolve(scriptRoot, name)
+    var src = path.resolve(folder, filePath)
 
     return linkBin(src, dest, linkOpts).then(() => {
       // bins should always be executable.
@@ -89,7 +107,6 @@ function linkBins (pkg, folder, parent, gtop, opts) {
       return dos2Unix(src)
     }).then(() => {
       if (!gtop) return
-      var dest = path.resolve(binRoot, bin)
       var out = opts.parseable
               ? dest + '::' + src + ':BINFILE'
               : dest + ' -> ' + src
