@@ -91,9 +91,9 @@ function linkScripts (scripts, scriptRoot, folder, gtop, opts) {
   var linkOpts = getLinkOpts(opts, gtop && folder)
   var execMode = parseInt('0777', 8) & (~opts.umask)
 
-  return BB.map(Object.entries(scripts), ([name, filePath]) => {
+  return BB.map(Object.keys(scripts), name => {
     var dest = path.resolve(scriptRoot, name)
-    var src = path.resolve(folder, filePath)
+    var src = path.resolve(folder, scripts[name])
 
     return linkBin(src, dest, linkOpts).then(() => {
       // bins should always be executable.
