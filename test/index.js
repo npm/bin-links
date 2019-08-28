@@ -35,7 +35,6 @@ const pkg = {
 const folder = path.join(__dirname, '..', 'fixtures', 'convert-windows-newlines')
 const nodeModulesFolder = path.join(folder, 'node_modules')
 const pkgFolder = path.join(nodeModulesFolder, pkg.name)
-console.log({pkgFolder})
 
 test('converts windows newlines correctly', function (t) {
   cleanup()
