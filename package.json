@@ -32,6 +32,7 @@
     "cmd-shim": "^3.0.0",
     "gentle-fs": "^2.0.1",
     "graceful-fs": "^4.1.15",
+    "npm-normalize-package-bin": "^1.0.0",
     "write-file-atomic": "^2.3.0"
   },
   "devDependencies": {
