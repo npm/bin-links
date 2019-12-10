@@ -137,7 +137,8 @@ function linkMans (pkg, folder, parent, gtop, opts) {
     return acc
   }, {})
   var manpages = pkg.man.filter(function (man) {
-    return set[path.basename(man)] === man
+    const cleanMan = path.join('/', man).replace(/\\|:/g, '/').substr(1)
+    return set[path.basename(man)] === cleanMan
   })
 
   return BB.map(manpages, man => {
