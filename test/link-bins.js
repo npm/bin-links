@@ -77,7 +77,10 @@ t.test('foo package cannot link, pre-existing stuff there', t => {
 })
 
 t.test('foo package can link with --force link', t => {
-  const foo = resolve(me, 'node_modules/foo')
+  const cwd = process.cwd()
+  t.teardown(() => process.chdir(cwd))
+  process.chdir(me)
+  const foo = 'node_modules/foo'
   mkdirp(foo)
   const pkg = {
     name: 'foo',
