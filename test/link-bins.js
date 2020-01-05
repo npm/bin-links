@@ -8,7 +8,7 @@ const _FAKE_PLATFORM_ = process.platform === 'win32' ? 'unix' : null
 const fs = require('fs')
 const mkdirp = require('mkdirp').sync
 const rimraf = require('rimraf').sync
-const {basename, resolve} = require('path')
+const { basename, resolve } = require('path')
 const me = resolve(__dirname, basename(__filename, '.js'))
 rimraf(me)
 mkdirp(me)

@@ -2,7 +2,7 @@
 
 const path = require('path')
 const fs = require('graceful-fs')
-const {promisify} = require('util')
+const { promisify } = require('util')
 const gentleFs = require('gentle-fs')
 const linkIfExists = promisify(gentleFs.linkIfExists)
 const gentleFsBinLink = promisify(gentleFs.binLink)
@@ -50,10 +50,10 @@ function isHashbangFile (file) {
       }
       const line = Buffer.alloc(2048)
       return read(fileHandle, line, 0, 2048, 0)
-      .then((bytes) => close(fileHandle).then(() => bytes && hasCR(line)))
+        .then((bytes) => close(fileHandle).then(() => bytes && hasCR(line)))
     })
     // don't leak a fd if the read fails
-    .catch(/* istanbul ignore next */ () => close(fileHandle).then(FALSE, FALSE))
+      .catch(/* istanbul ignore next */ () => close(fileHandle).then(FALSE, FALSE))
   }).catch(FALSE)
 }
 
@@ -83,7 +83,7 @@ function linkBins (pkg, folder, parent, gtop, opts) {
   var linkOpts = getLinkOpts(opts, gtop && folder)
   var execMode = parseInt('0777', 8) & (~opts.umask)
   var binRoot = gtop ? opts.globalBin
-                     : path.resolve(parent, '.bin')
+    : path.resolve(parent, '.bin')
   opts.log.verbose('linkBins', [pkg.bin, binRoot, gtop])
 
   return Promise.all(Object.keys(pkg.bin).map(bin => {
@@ -110,8 +110,8 @@ function linkBins (pkg, folder, parent, gtop, opts) {
       if (!gtop) return
       var dest = path.resolve(binRoot, bin)
       var out = opts.parseable
-              ? dest + '::' + src + ':BINFILE'
-              : dest + ' -> ' + src
+        ? dest + '::' + src + ':BINFILE'
+        : dest + ' -> ' + src
 
       if (!opts.json && !opts.parseable) {
         opts.log.clearProgress()
