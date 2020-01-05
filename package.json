@@ -1,6 +1,9 @@
 {
   "name": "bin-links",
   "version": "1.1.7",
+  "publishConfig": {
+    "tag": "legacy"
+  },
   "description": "JavaScript package binary linker",
   "main": "index.js",
   "scripts": {
@@ -8,9 +11,7 @@
     "postrelease": "npm publish && git push --follow-tags",
     "posttest": "standard",
     "release": "standard-version -s",
-    "test": "tap -J --nyc-arg=--all --coverage test/*.js --100",
-    "update-coc": "weallbehave -o . && git add CODE_OF_CONDUCT.md && git commit -m 'docs(coc): updated CODE_OF_CONDUCT.md'",
-    "update-contrib": "weallcontribute -o . && git add CONTRIBUTING.md && git commit -m 'docs(contributing): updated CONTRIBUTING.md'"
+    "test": "tap -J --nyc-arg=--all --coverage test/*.js --100"
   },
   "repository": {
     "type": "git",
@@ -41,9 +42,7 @@
     "rimraf": "^2.6.3",
     "standard": "^10.0.3",
     "standard-version": "^4.4.0",
-    "tap": "^12.1.3",
-    "weallbehave": "^1.2.0",
-    "weallcontribute": "^1.0.8"
+    "tap": "^12.1.3"
   },
   "files": [
     "index.js"
