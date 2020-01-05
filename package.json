@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/npm/bin-links#readme",
   "dependencies": {
-    "bluebird": "^3.5.3",
     "cmd-shim": "^3.0.0",
     "gentle-fs": "^2.3.0",
     "graceful-fs": "^4.1.15",

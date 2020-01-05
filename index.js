@@ -2,21 +2,21 @@
 
 const path = require('path')
 const fs = require('graceful-fs')
-const BB = require('bluebird')
+const {promisify} = require('util')
 const gentleFs = require('gentle-fs')
-const linkIfExists = BB.promisify(gentleFs.linkIfExists)
-const gentleFsBinLink = BB.promisify(gentleFs.binLink)
-const open = BB.promisify(fs.open)
-const close = BB.promisify(fs.close)
-const read = BB.promisify(fs.read, {multiArgs: true})
-const chmod = BB.promisify(fs.chmod)
-const readFile = BB.promisify(fs.readFile)
-const writeFileAtomic = BB.promisify(require('write-file-atomic'))
+const linkIfExists = promisify(gentleFs.linkIfExists)
+const gentleFsBinLink = promisify(gentleFs.binLink)
+const open = promisify(fs.open)
+const close = promisify(fs.close)
+const read = promisify(fs.read)
+const chmod = promisify(fs.chmod)
+const readFile = promisify(fs.readFile)
+const writeFileAtomic = promisify(require('write-file-atomic'))
 const normalize = require('npm-normalize-package-bin')
 
-module.exports = BB.promisify(binLinks)
+module.exports = binLinks
 
-function binLinks (pkg, folder, global, opts, cb) {
+function binLinks (pkg, folder, global, opts) {
   pkg = normalize(pkg)
   folder = path.resolve(folder)
 
@@ -33,20 +33,28 @@ function binLinks (pkg, folder, global, opts, cb) {
   if (gnm) opts.log.silly('linkStuff', opts.pkgId, 'is installed into a global node_modules')
   if (gtop) opts.log.silly('linkStuff', opts.pkgId, 'is installed into the top-level global node_modules')
 
-  return BB.join(
+  return Promise.all([
     linkBins(pkg, folder, parent, gtop, opts),
     linkMans(pkg, folder, parent, gtop, opts)
-  ).asCallback(cb)
+  ])
 }
 
 function isHashbangFile (file) {
+  /* istanbul ignore next */
+  const FALSE = () => false
   return open(file, 'r').then(fileHandle => {
-    return read(fileHandle, Buffer.alloc(2), 0, 2, 0).spread((_, buf) => {
-      if (!hasHashbang(buf)) return []
-      return read(fileHandle, Buffer.alloc(2048), 0, 2048, 0)
-    }).spread((_, buf) => buf && hasCR(buf), /* istanbul ignore next */ () => false)
-      .finally(() => close(fileHandle))
-  }).catch(/* istanbul ignore next */ () => false)
+    const buf = Buffer.alloc(2)
+    return read(fileHandle, buf, 0, 2, 0).then((...args) => {
+      if (!hasHashbang(buf)) {
+        return []
+      }
+      const line = Buffer.alloc(2048)
+      return read(fileHandle, line, 0, 2048, 0)
+      .then((bytes) => close(fileHandle).then(() => bytes && hasCR(line)))
+    })
+    // don't leak a fd if the read fails
+    .catch(/* istanbul ignore next */ () => close(fileHandle).then(FALSE, FALSE))
+  }).catch(FALSE)
 }
 
 function hasHashbang (buf) {
@@ -78,14 +86,14 @@ function linkBins (pkg, folder, parent, gtop, opts) {
                      : path.resolve(parent, '.bin')
   opts.log.verbose('linkBins', [pkg.bin, binRoot, gtop])
 
-  return BB.map(Object.keys(pkg.bin), bin => {
+  return Promise.all(Object.keys(pkg.bin).map(bin => {
     var dest = path.resolve(binRoot, bin)
     var src = path.resolve(folder, pkg.bin[bin])
 
     /* istanbul ignore if - that unpossible */
     if (src.indexOf(folder) !== 0) {
-      throw new Error('invalid bin entry for package ' +
-        pkg._id + '. key=' + bin + ', value=' + pkg.bin[bin])
+      return Promise.reject(new Error('invalid bin entry for package ' +
+        pkg._id + '. key=' + bin + ', value=' + pkg.bin[bin]))
     }
 
     return linkBin(src, dest, linkOpts).then(() => {
@@ -115,7 +123,7 @@ function linkBins (pkg, folder, parent, gtop, opts) {
       if (err.code === 'ENOENT' && opts.ignoreScripts) return
       throw err
     })
-  })
+  }))
 }
 
 function linkBin (from, to, opts) {
@@ -150,15 +158,15 @@ function linkMans (pkg, folder, parent, gtop, opts) {
     return set[path.basename(man)] === cleanMan
   })
 
-  return BB.map(manpages, man => {
+  return Promise.all(manpages.map(man => {
     opts.log.silly('linkMans', 'preparing to link', man)
     var parseMan = man.match(/(.*\.([0-9]+)(\.gz)?)$/)
     if (!parseMan) {
-      throw new Error(
+      return Promise.reject(new Error(
         man + ' is not a valid name for a man file.  ' +
         'Man files must end with a number, ' +
         'and optionally a .gz suffix if they are compressed.'
-      )
+      ))
     }
 
     var stem = parseMan[1]
@@ -167,8 +175,8 @@ function linkMans (pkg, folder, parent, gtop, opts) {
     var manSrc = path.resolve(folder, man)
     /* istanbul ignore if - that unpossible */
     if (manSrc.indexOf(folder) !== 0) {
-      throw new Error('invalid man entry for package ' +
-        pkg._id + '. man=' + manSrc)
+      return Promise.reject(new Error('invalid man entry for package ' +
+        pkg._id + '. man=' + manSrc))
     }
 
     var manDest = path.join(manRoot, 'man' + sxn, bn)
@@ -179,5 +187,5 @@ function linkMans (pkg, folder, parent, gtop, opts) {
     opts.clobberLinkGently = true
 
     return linkIfExists(manSrc, manDest, getLinkOpts(opts, gtop && folder))
-  })
+  }))
 }

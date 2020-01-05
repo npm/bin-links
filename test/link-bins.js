@@ -1,6 +1,5 @@
 const t = require('tap')
-const BB = require('bluebird')
-const binLinks = BB.promisify(require('../'))
+const binLinks = require('../')
 
 // forking between cmd-shims and symlinks is already handled by
 // the gentle-fs.binLink module.  just test the unix handling here.

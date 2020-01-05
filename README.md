@@ -38,10 +38,12 @@ jump in if you'd like to, or even ask us questions if something isn't clear.
 
 ### API
 
-#### <a name="binLinks"></a> `> binLinks(pkg, folder, global, opts, cb)`
+#### <a name="binLinks"></a> `> binLinks(pkg, folder, global, opts)`
+
+Returns a Promise that resolves when the requisite things have been linked.
 
 ##### Example
 
 ```javascript
-binLinks(pkg, folder, global, opts, cb)
+binLinks(pkg, folder, global, opts).then(() => console.log('bins linked!'))
 ```

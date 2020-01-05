@@ -6,7 +6,7 @@ const mkdirp = require('mkdirp')
 const rimraf = require('rimraf')
 const test = require('tap').test
 
-const binLinks = require('../index.js')
+const binLinks = require('../')
 
 const log = {
   clearProgress () {},
