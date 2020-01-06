@@ -16,6 +16,15 @@ const normalize = require('npm-normalize-package-bin')
 
 module.exports = binLinks
 
+// don't blow up trying to log stuff if we weren't given a logger
+const log = {
+  clearProgress () {},
+  info () {},
+  showProgress () {},
+  silly () {},
+  verbose () {}
+}
+
 function binLinks (pkg, folder, global, opts) {
   pkg = normalize(pkg)
   folder = path.resolve(folder)
@@ -26,6 +35,12 @@ function binLinks (pkg, folder, global, opts) {
   var parent = pkg.name && pkg.name[0] === '@' ? path.dirname(path.dirname(folder)) : path.dirname(folder)
   var gnm = global && opts.globalDir
   var gtop = parent === gnm
+
+  // use the no-op logger if one is not provided
+  opts = {
+    log,
+    ...opts
+  }
 
   opts.log.info('linkStuff', opts.pkgId)
   opts.log.silly('linkStuff', opts.pkgId, 'has', parent, 'as its parent node_modules')

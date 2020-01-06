@@ -15,14 +15,6 @@ mkdirp(me)
 const globalDir = resolve(me, 'node_modules')
 t.teardown(() => rimraf(me))
 
-const log = {
-  clearProgress () {},
-  info () {},
-  showProgress () {},
-  silly () {},
-  verbose () {}
-}
-
 // create some stuff that's already in the bin/man folders
 const globalBin = resolve(me, 'bin')
 mkdirp(globalBin)
@@ -63,7 +55,6 @@ t.test('foo package cannot link, pre-existing stuff there', t => {
     global: true,
     globalBin,
     globalDir,
-    log,
     pkgId: `${pkg.name}@${pkg.version}`,
     name: pkg.name,
     _FAKE_PLATFORM_,
@@ -96,7 +87,6 @@ t.test('foo package can link with --force link', t => {
     global: true,
     globalBin,
     globalDir,
-    log,
     pkgId: `${pkg.name}@${pkg.version}`,
     name: pkg.name,
     _FAKE_PLATFORM_,
@@ -130,7 +120,6 @@ t.test('bar package can update, links are ours', t => {
     global: true,
     globalBin,
     globalDir,
-    log,
     pkgId: `${pkg.name}@${pkg.version}`,
     name: pkg.name,
     _FAKE_PLATFORM_,
@@ -160,7 +149,6 @@ t.test('cannot overwrite with another package with the same bin', t => {
     prefix: me,
     globalBin,
     globalDir,
-    log,
     pkgId: `${pkg.name}@${pkg.version}`,
     _FAKE_PLATFORM_,
     name: pkg.name,
@@ -185,7 +173,6 @@ t.test('nothing to link', t => {
     prefix: me,
     globalBin,
     globalDir,
-    log,
     pkgId: `${pkg.name}@${pkg.version}`,
     _FAKE_PLATFORM_,
     name: pkg.name,
@@ -209,7 +196,6 @@ t.test('invalid man page name', t => {
     prefix: me,
     globalBin,
     globalDir,
-    log,
     pkgId: `${pkg.name}@${pkg.version}`,
     _FAKE_PLATFORM_,
     name: pkg.name,
