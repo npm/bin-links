@@ -18,15 +18,32 @@ binaries and man pages for Javascript packages
 ### Example
 
 ```javascript
-// todo
+const binLinks = require('bin-links')
+const readPackageJson = require('read-package-json-fast')
+binLinks({
+  path: '/path/to/node_modules/some-package',
+  pkg: readPackageJson('/path/to/node_modules/some-package/package.json'),
+
+  // true if it's a global install, false for local.  default: false
+  global: true,
+
+  // true if it's the top level package being installed, false otherwise
+  top: true,
+
+  // true if you'd like to recklessly overwrite files.
+  force: true,
+})
 ```
 
 ### Features
 
-* Links bin files listed under the `bin` property of pkg to the node_modules/.bin
-directory of the installing environment.
-* Links man files listed under the `man` property of pkg to the share/man directory
-of the provided optional directory prefix.
+* Links bin files listed under the `bin` property of pkg to the
+  `node_modules/.bin` directory of the installing environment.  (Or
+  `${prefix}/bin` for top level global packages on unix, and `${prefix}`
+  for top level global packages on Windows.)
+* Links man files listed under the `man` property of pkg to the share/man
+  directory.  (This is only done for top-level global packages on Unix
+  systems.)
 
 ### Contributing
 
@@ -38,12 +55,12 @@ jump in if you'd like to, or even ask us questions if something isn't clear.
 
 ### API
 
-#### <a name="binLinks"></a> `> binLinks(pkg, folder, global, opts)`
+#### <a name="binLinks"></a> `> binLinks({path, pkg, force, global, top})`
 
 Returns a Promise that resolves when the requisite things have been linked.
 
 ##### Example
 
 ```javascript
-binLinks(pkg, folder, global, opts).then(() => console.log('bins linked!'))
+binLinks({path, pkg, force, global, top}).then(() => console.log('bins linked!'))
 ```
