@@ -2,7 +2,7 @@ const t = require('tap')
 const requireInject = require('require-inject')
 
 const mockLinkBins = opt => opt
-const mockLinkMans = opt => opt.manTarget ? opt : null
+const mockLinkMans = opt => opt.top && !opt.isWindows ? opt : null
 
 // root unit test.  go through each combination and snapshot them all.
 // the index just sets up paths and calls the appropriate functions,
@@ -48,7 +48,11 @@ for (const isWindows of [true, false]) {
                   path,
                   '../lib/is-windows.js': isWindows,
                   '../lib/link-bins.js': mockLinkBins,
-                  '../lib/link-mans.js': mockLinkMans,
+                  '../lib/link-mans.js': opt => mockLinkMans({
+                    ...opt,
+                    top,
+                    isWindows,
+                  }),
                 })
 
                 return Promise.all([

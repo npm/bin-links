@@ -5,21 +5,21 @@ const linkMans = requireInject('../lib/link-mans.js', {
   '../lib/link-gently.js': ({from, to}) => Promise.resolve(`LINK ${from} ${to}`),
 })
 
-t.test('no manTarget', t => linkMans({
+t.test('not top/global', t => linkMans({
   pkg: { man: ['foo.1'] },
-  manTarget: null,
+  top: false,
   path: '/usr/local/lib/node_modules/pkg',
 }).then(res => t.strictSame(res, [])))
 
 t.test('man not an array', t => linkMans({
   pkg: { man: 'not an array' },
-  manTarget: '/usr/local/share/man',
+  top: true,
   path: '/usr/local/lib/node_modules/pkg',
 }).then(res => t.strictSame(res, [])))
 
 t.test('no man', t => linkMans({
   pkg: {},
-  manTarget: '/usr/local/share/man',
+  top: true,
   path: '/usr/local/lib/node_modules/pkg',
 }).then(res => t.strictSame(res, [])))
 
@@ -34,7 +34,7 @@ t.test('link some mans', t => linkMans({
       'c:\\path\\to\\passwd.2',
     ],
   },
-  manTarget: '/usr/local/share/man',
+  top: true,
   path: '/usr/local/lib/node_modules/pkg',
 }).then(res => t.strictSame(res.sort((a,b)=>a.localeCompare(b)), [
   'LINK ../../../lib/node_modules/pkg/c/path/to/passwd.2 /usr/local/share/man/man2/passwd.2',
@@ -56,6 +56,6 @@ t.test('bad man', t => t.rejects(linkMans({
       'foo.1.gz',
     ],
   },
-  manTarget: '/usr/local/share/man',
+  top: true,
   path: '/usr/local/lib/node_modules/pkg',
 }), { code: 'EBADMAN' }))
