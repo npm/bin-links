@@ -43,14 +43,14 @@ Array []
 
 exports[`test/get-paths.js TAP posix global top both > scoped package 1`] = `
 Array [
-  "/usr/local/lib/bin/foo",
+  "/usr/local/bin/foo",
   "/usr/local/share/man/man1/foo.1.gz",
 ]
 `
 
 exports[`test/get-paths.js TAP posix global top both > unscoped package 1`] = `
 Array [
-  "/usr/local/lib/bin/foo",
+  "/usr/local/bin/foo",
   "/usr/local/share/man/man1/foo.1.gz",
 ]
 `

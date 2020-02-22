@@ -18,12 +18,12 @@ for (const isWindows of [true, false]) {
     const {resolve} = require('path')[isWindows ? 'win32' : 'posix']
 
     t.test('link bins', t => linkBins({
-        path: resolve('/path/to/node_modules/foo'),
+        path: resolve('/path/to/lib/node_modules/foo'),
         top: true,
         pkg,
     }).then(linked => t.strictSame(linked, [
-      isWindows ? 'SHIM node_modules\\foo\\foo.js \\path\\to\\foo'
-        : 'LINK ../node_modules/foo/foo.js /path/to/bin/foo'
+      isWindows ? 'SHIM node_modules\\foo\\foo.js \\path\\to\\lib\\foo'
+        : 'LINK ../lib/node_modules/foo/foo.js /path/to/bin/foo'
     ])))
 
     t.test('no bins to link', t => linkBins({

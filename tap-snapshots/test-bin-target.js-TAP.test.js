@@ -10,7 +10,7 @@ exports[`test/bin-target.js TAP posix > not top 1`] = `
 `
 
 exports[`test/bin-target.js TAP posix > top (and thus global) 1`] = `
-/path/to/bin
+/path/bin
 `
 
 exports[`test/bin-target.js TAP win32 > not top 1`] = `
