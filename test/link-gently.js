@@ -1,6 +1,7 @@
 const t = require('tap')
-const requireInject = require('require-inject')
+const linkGently = require('../lib/link-gently.js')
 const fs = require('fs')
+const requireInject = require('require-inject')
 
 t.test('make links gently', t => {
   const dir = t.testdir({
@@ -14,7 +15,6 @@ t.test('make links gently', t => {
     existingFile: 'hello',
   })
 
-  const linkGently = requireInject('../lib/link-gently.js', {})
   return linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
@@ -73,4 +73,46 @@ t.test('make links gently', t => {
   }))
   .then(() =>
     t.throws(() => fs.readlinkSync(`${dir}/bin/missing`), { code: 'ENOENT' }))
+})
+
+t.test('racey race', t => {
+  const linkGently = requireInject('../lib/link-gently.js', {
+    fs: {
+      ...fs,
+      symlink: (path, dest, type, cb) => {
+        // throw a lag on it to ensure that one of them doesn't finish
+        // before the other even starts.
+        setTimeout(() => fs.symlink(path, dest, type, cb), 200)
+      },
+    },
+  })
+  const dir = t.testdir({
+    pkg: {
+      'hello.js': `#!/usr/bin/env node\nconsole.log('hello')`,
+    },
+    otherpkg: {
+      'hello.js': `#!/usr/bin/env node\nconsole.log('other hello')`,
+    },
+    existingLink: t.fixture('symlink', './pkg/hello.js'),
+    existingFile: 'hello',
+  })
+  return Promise.all([
+    linkGently({
+      path: `${dir}/pkg`,
+      from: `./pkg/hello.js`,
+      to: `${dir}/racecar`,
+      absFrom: `${dir}/pkg/hello.js`,
+      force: true,
+    }),
+    linkGently({
+      path: `${dir}/otherpkg`,
+      from: `./otherpkg/hello.js`,
+      to: `${dir}/racecar`,
+      absFrom: `${dir}/otherpkg/hello.js`,
+      force: true,
+    }),
+  ]).then(() => {
+    const target = fs.readlinkSync(`${dir}/racecar`)
+    t.match(target, /^\.\/(other)?pkg\/hello\.js$/, 'should link to one of them')
+  })
 })
