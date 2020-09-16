@@ -79,3 +79,16 @@ for (const isWindows of [true, false]) {
     }
   })
 }
+
+t.test('the resetSeen() method calls appropriate resets', t => {
+  const binLinks = requireInject('../', {
+    '../lib/shim-bin.js': { resetSeen: () => {
+      t.pass('shimBin.resetSeen() called')
+    }},
+    '../lib/link-gently.js': { resetSeen: () => {
+      t.pass('linkGently.resetSeen() called')
+    }},
+  })
+  t.plan(2)
+  binLinks.resetSeen()
+})

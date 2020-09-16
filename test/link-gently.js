@@ -3,7 +3,7 @@ const linkGently = require('../lib/link-gently.js')
 const fs = require('fs')
 const requireInject = require('require-inject')
 
-t.test('make links gently', t => {
+t.test('make links gently', async t => {
   const dir = t.testdir({
     pkg: {
       'hello.js': `#!/usr/bin/env node\nconsole.log('hello')`,
@@ -15,76 +15,85 @@ t.test('make links gently', t => {
     existingFile: 'hello',
   })
 
-  return linkGently({
+  await linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }).then(() =>
-    t.equal(fs.readlinkSync(`${dir}/bin/hello`), '../pkg/hello.js'))
+  })
+  t.equal(fs.readlinkSync(`${dir}/bin/hello`), '../pkg/hello.js')
+  linkGently.resetSeen()
+
   // call it again to test the 'SKIP' code path
-  .then(() => linkGently({
+  await linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }))
-  .then(() => t.rejects(linkGently({
+  })
+  linkGently.resetSeen()
+  await t.rejects(linkGently({
     path: `${dir}/otherpkg`,
     to: `${dir}/bin/hello`,
     from: `../otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
-  }), { code: 'EEXIST' }))
-  .then(() => linkGently({
+  }), { code: 'EEXIST' })
+  linkGently.resetSeen()
+  await linkGently({
     path: `${dir}/otherpkg`,
     to: `${dir}/bin/hello`,
     from: `../otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
     force: true,
-  }))
-  .then(() =>
-    t.equal(fs.readlinkSync(`${dir}/bin/hello`), '../otherpkg/hello.js'))
-  .then(() => t.rejects(linkGently({
+  })
+  t.equal(fs.readlinkSync(`${dir}/bin/hello`), '../otherpkg/hello.js')
+
+  await t.rejects(linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/existingFile/notadir`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }), { code: 'ENOTDIR' }))
-  .then(() => t.rejects(linkGently({
+  }), { code: 'ENOTDIR' })
+
+  linkGently.resetSeen()
+  await t.rejects(linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/existingFile`,
     from: `./pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }), { code: 'EEXIST' }))
-  .then(() => linkGently({
+  }), { code: 'EEXIST' })
+  linkGently.resetSeen()
+  await linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/existingFile`,
     from: `./pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
     force: true,
-  }))
-  .then(() =>
-    t.equal(fs.readlinkSync(`${dir}/existingFile`), './pkg/hello.js'))
-  .then(() => linkGently({
+  })
+  t.equal(fs.readlinkSync(`${dir}/existingFile`), './pkg/hello.js')
+  linkGently.resetSeen()
+
+  await linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/bin/missing`,
     from: `../pkg/missing.js`,
     absFrom: `${dir}/pkg/missing.js`,
-  }))
-  .then(() =>
-    t.throws(() => fs.readlinkSync(`${dir}/bin/missing`), { code: 'ENOENT' }))
+  })
+  t.throws(() => fs.readlinkSync(`${dir}/bin/missing`), { code: 'ENOENT' })
+  linkGently.resetSeen()
 })
 
-t.test('racey race', t => {
-  const linkGently = requireInject('../lib/link-gently.js', {
-    fs: {
-      ...fs,
-      symlink: (path, dest, type, cb) => {
-        // throw a lag on it to ensure that one of them doesn't finish
-        // before the other even starts.
-        setTimeout(() => fs.symlink(path, dest, type, cb), 200)
-      },
+t.test('racey race', async t => {
+  const fsMock = {
+    ...fs,
+    symlink: (path, dest, type, cb) => {
+      // throw a lag on it to ensure that one of them doesn't finish
+      // before the other even starts.
+      setTimeout(() => fs.symlink(path, dest, type, cb), 200)
     },
+  }
+  const linkGently = requireInject('../lib/link-gently.js', {
+    fs: fsMock,
   })
   const dir = t.testdir({
     pkg: {
@@ -111,6 +120,7 @@ t.test('racey race', t => {
       absFrom: `${dir}/otherpkg/hello.js`,
       force: true,
     }),
+    new Promise((res) => fs.symlink(__filename, `${dir}/racecar`, 'file', res))
   ]).then(() => {
     const target = fs.readlinkSync(`${dir}/racecar`)
     t.match(target, /^\.\/(other)?pkg\/hello\.js$/, 'should link to one of them')

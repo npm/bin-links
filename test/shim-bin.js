@@ -5,7 +5,7 @@ const {statSync} = fs
 const path = require('path').win32
 const mkdirp = require('mkdirp')
 
-t.test('basic shim bin', t => {
+t.test('basic shim bin', async t => {
   const dir = t.testdir({
     pkg: {
       'hello.js': `#!/usr/bin/env node\r\nconsole.log('hello')`,
@@ -16,52 +16,62 @@ t.test('basic shim bin', t => {
     notashim: 'definitely not',
   })
   const shimBin = requireInject('../lib/shim-bin.js', { path, mkdirp })
-  return shimBin({
+  await shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }).then(() => {
+  })
+  {
     const shims = ['hello', 'hello.cmd', 'hello.ps1'].map(f => `${dir}/bin/${f}`)
     for (const shim of shims) {
       t.equal(statSync(shim).mode & 0o100, 0o100, 'exists and executable')
     }
-  })
-  .then(() => t.rejects(shimBin({
+  }
+  shimBin.resetSeen()
+
+  await t.rejects(shimBin({
     path: `${dir}/otherpkg`,
     to: `${dir}/bin/hello`,
     from: `../otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
-  }), { code: 'EEXIST' }))
-  .then(() => t.rejects(shimBin({
+  }), { code: 'EEXIST' })
+  shimBin.resetSeen()
+  await t.rejects(shimBin({
     path: `${dir}/otherpkg`,
     to: `${dir}/notashim`,
     from: `./otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
-  }), { code: 'EEXIST' }))
-  .then(() => shimBin({
+  }), { code: 'EEXIST' })
+  shimBin.resetSeen()
+
+  await shimBin({
     path: `${dir}/otherpkg`,
     to: `${dir}/notashim`,
     from: `./otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
     force: true
-  }))
-  .then(() => statSync(`${dir}/notashim.cmd`))
-  .then(() => shimBin({
+  })
+  statSync(`${dir}/notashim.cmd`)
+  shimBin.resetSeen()
+  await shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }))
-  .then(() => shimBin({
+  })
+  shimBin.resetSeen()
+  await shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/missing`,
     from: `../pkg/missing.js`,
     absFrom: `${dir}/pkg/missing.js`,
-  })).then(() => t.throws(() => statSync(`${dir}/bin/missing.cmd`)))
+  })
+  t.throws(() => statSync(`${dir}/bin/missing.cmd`))
+  shimBin.resetSeen()
 })
 
-t.test('eperm on stat', t => {
+t.test('eperm on stat', async t => {
   const dir = t.testdir({
     pkg: {
       'hello.js': `#!/usr/bin/env node\r\nconsole.log('hello')`,
@@ -81,15 +91,17 @@ t.test('eperm on stat', t => {
       })),
     },
   })
-  return t.rejects(shimBin({
+  shimBin.resetSeen()
+  await t.rejects(shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
   }), { code: 'EPERM' })
+  shimBin.resetSeen()
 })
 
-t.test('strange enoent from read-cmd-shim', t => {
+t.test('strange enoent from read-cmd-shim', async t => {
   const dir = t.testdir({
     pkg: {
       'hello.js': `#!/usr/bin/env node\r\nconsole.log('hello')`,
@@ -106,26 +118,40 @@ t.test('strange enoent from read-cmd-shim', t => {
       code: 'ENOENT',
     }))
   })
-  return shimBin({
-    path: `${dir}/pkg`,
-    to: `${dir}/bin/hello`,
-    from: `../pkg/hello.js`,
-    absFrom: `${dir}/pkg/hello.js`,
-  }).then(() => {
+
+  // run two so that we do hit the seen path
+  await Promise.all([
+    shimBin({
+      path: `${dir}/pkg`,
+      to: `${dir}/bin/hello`,
+      from: `../pkg/hello.js`,
+      absFrom: `${dir}/pkg/hello.js`,
+    }),
+    shimBin({
+      path: `${dir}/pkg`,
+      to: `${dir}/bin/hello`,
+      from: `../pkg/hello.js`,
+      absFrom: `${dir}/pkg/hello.js`,
+    }),
+  ])
+
+  {
     const shims = ['hello', 'hello.cmd', 'hello.ps1'].map(f => `${dir}/bin/${f}`)
     for (const shim of shims) {
       t.equal(statSync(shim).mode & 0o100, 0o100, 'exists and executable')
     }
-  })
-  .then(() => shimBin({
+  }
+  shimBin.resetSeen()
+  await shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }))
+  })
+  shimBin.resetSeen()
 })
 
-t.test('unknown error from read-cmd-shim', t => {
+t.test('unknown error from read-cmd-shim', async t => {
   const dir = t.testdir({
     pkg: {
       'hello.js': `#!/usr/bin/env node\r\nconsole.log('hello')`,
@@ -142,21 +168,25 @@ t.test('unknown error from read-cmd-shim', t => {
       code: 'ELDERGAWDS',
     }))
   })
-  return shimBin({
+  shimBin.resetSeen()
+  await shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }).then(() => {
+  })
+  {
     const shims = ['hello', 'hello.cmd', 'hello.ps1'].map(f => `${dir}/bin/${f}`)
     for (const shim of shims) {
       t.equal(statSync(shim).mode & 0o100, 0o100, 'exists and executable')
     }
-  })
-  .then(() => t.rejects(shimBin({
+  }
+  shimBin.resetSeen()
+  await t.rejects(shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
-  }), { code: 'ELDERGAWDS' }))
+  }), { code: 'ELDERGAWDS' })
+  shimBin.resetSeen()
 })
