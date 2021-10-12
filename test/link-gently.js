@@ -15,22 +15,25 @@ t.test('make links gently', async t => {
     existingFile: 'hello',
   })
 
-  await linkGently({
+  let linkResult
+  linkResult = await linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
   })
+  t.equal(linkResult, true)
   t.equal(fs.readlinkSync(`${dir}/bin/hello`), '../pkg/hello.js')
   linkGently.resetSeen()
 
-  // call it again to test the 'SKIP' code path
-  await linkGently({
+  // call it again to test the 'SKIP' code path and ensure it returns false
+  linkResult = await linkGently({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
     from: `../pkg/hello.js`,
     absFrom: `${dir}/pkg/hello.js`,
   })
+  t.equal(linkResult, false)
   linkGently.resetSeen()
   await t.rejects(linkGently({
     path: `${dir}/otherpkg`,
@@ -39,13 +42,14 @@ t.test('make links gently', async t => {
     absFrom: `${dir}/otherpkg/hello.js`,
   }), { code: 'EEXIST' })
   linkGently.resetSeen()
-  await linkGently({
+  linkResult = await linkGently({
     path: `${dir}/otherpkg`,
     to: `${dir}/bin/hello`,
     from: `../otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
     force: true,
   })
+  t.equal(linkResult, true)
   t.equal(fs.readlinkSync(`${dir}/bin/hello`), '../otherpkg/hello.js')
 
   await t.rejects(linkGently({
