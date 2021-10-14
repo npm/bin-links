@@ -74,3 +74,27 @@ t.test('failure to close is ignored', t => {
       `#!/usr/bin/env node\nconsole.log('hello')\r\n`, 'fixed \\r on hashbang line (ignored failed close)')
   })
 })
+
+t.test('custom exec mode', t => {
+  const dir = t.testdir({
+    goodhb: `#!/usr/bin/env node\nconsole.log('hello')\r\n`,
+  })
+  chmodSync(`${dir}/goodhb`, 0o644)
+  return fixBin(`${dir}/goodhb`, 0o755).then(() => {
+    t.equal((statSync(`${dir}/goodhb`).mode & 0o755), 0o755 & (~umask), 'has exec perms')
+    t.equal(readFileSync(`${dir}/goodhb`, 'utf8'),
+      `#!/usr/bin/env node\nconsole.log('hello')\r\n`, 'fixed \\r on hashbang line')
+  })
+})
+
+t.test('custom exec mode in windows', t => {
+  const dir = t.testdir({
+    goodhb: `#!/usr/bin/env node\r\nconsole.log('hello')\r\n`,
+  })
+  chmodSync(`${dir}/goodhb`, 0o644)
+  return fixBin(`${dir}/goodhb`, 0o755).then(() => {
+    t.equal((statSync(`${dir}/goodhb`).mode & 0o755), 0o755 & (~umask), 'has exec perms')
+    t.equal(readFileSync(`${dir}/goodhb`, 'utf8'),
+      `#!/usr/bin/env node\nconsole.log('hello')\r\n`, 'fixed \\r on hashbang line')
+  })
+})
