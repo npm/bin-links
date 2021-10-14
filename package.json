@@ -22,7 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "cmd-shim": "^4.0.1",
-    "mkdirp-infer-owner": "^1.0.2",
+    "mkdirp-infer-owner": "^2.0.0",
     "npm-normalize-package-bin": "^1.0.0",
     "read-cmd-shim": "^2.0.0",
     "rimraf": "^3.0.0",
