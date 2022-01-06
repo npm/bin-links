@@ -2,7 +2,7 @@
   "name": "bin-links",
   "version": "2.3.0",
   "description": "JavaScript package binary linker",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "preversion": "npm test",
     "postversion": "npm publish",

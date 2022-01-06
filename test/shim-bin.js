@@ -1,7 +1,7 @@
 const t = require('tap')
 const requireInject = require('require-inject')
 const fs = require('fs')
-const {statSync} = fs
+const { statSync } = fs
 const path = require('path').win32
 const mkdirp = require('mkdirp')
 
@@ -50,7 +50,7 @@ t.test('basic shim bin', async t => {
     to: `${dir}/notashim`,
     from: `./otherpkg/hello.js`,
     absFrom: `${dir}/otherpkg/hello.js`,
-    force: true
+    force: true,
   })
   statSync(`${dir}/notashim.cmd`)
   shimBin.resetSeen()
@@ -116,7 +116,7 @@ t.test('strange enoent from read-cmd-shim', async t => {
     mkdirp,
     'read-cmd-shim': path => Promise.reject(Object.assign(new Error('xyz'), {
       code: 'ENOENT',
-    }))
+    })),
   })
 
   // run two so that we do hit the seen path
@@ -166,7 +166,7 @@ t.test('unknown error from read-cmd-shim', async t => {
     mkdirp,
     'read-cmd-shim': path => Promise.reject(Object.assign(new Error('xyz'), {
       code: 'ELDERGAWDS',
-    }))
+    })),
   })
   shimBin.resetSeen()
   await shimBin({

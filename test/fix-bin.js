@@ -3,7 +3,7 @@ const requireInject = require('require-inject')
 const fixBin = require('../lib/fix-bin.js')
 const umask = process.umask()
 const fs = require('fs')
-const {readFileSync, statSync, chmodSync} = fs
+const { readFileSync, statSync, chmodSync } = fs
 
 t.test('fix windows hashbang', t => {
   const dir = t.testdir({
@@ -33,9 +33,9 @@ t.test('failure to read means not a windows hash bang file', t => {
   const fsMock = {
     ...fs,
     read: (a, b, c, d, e, cb) => {
-      fsMock.read = read
+      fsMock.read = null
       process.nextTick(() => cb(new Error('witaf')))
-    }
+    },
   }
   const fixBin = requireInject('../lib/fix-bin.js', {
     fs: fsMock,
@@ -48,6 +48,7 @@ t.test('failure to read means not a windows hash bang file', t => {
   return fixBin(`${dir}/whb`).then(() => {
     t.equal((statSync(`${dir}/whb`).mode & 0o777), 0o777 & (~umask), 'has exec perms')
     t.equal(readFileSync(`${dir}/whb`, 'utf8'),
+      /* eslint-disable-next-line max-len */
       `#!/usr/bin/env node\r\nconsole.log('hello')\r\n`, 'did not fix \\r on hashbang line (failed read)')
   })
 })
@@ -58,7 +59,7 @@ t.test('failure to close is ignored', t => {
     close: (fd, cb) => {
       fsMock.close = fs.close
       process.nextTick(() => cb(new Error('witaf')))
-    }
+    },
   }
   const fixBin = requireInject('../lib/fix-bin.js', {
     fs: fsMock,
@@ -71,6 +72,7 @@ t.test('failure to close is ignored', t => {
   return fixBin(`${dir}/whb`).then(() => {
     t.equal((statSync(`${dir}/whb`).mode & 0o777), 0o777 & (~umask), 'has exec perms')
     t.equal(readFileSync(`${dir}/whb`, 'utf8'),
+      /* eslint-disable-next-line max-len */
       `#!/usr/bin/env node\nconsole.log('hello')\r\n`, 'fixed \\r on hashbang line (ignored failed close)')
   })
 })

@@ -25,22 +25,21 @@ for (const isWindows of [true, false]) {
             for (const force of [true, false]) {
               t.test(`force=${force}`, t => {
                 const path = require('path')[isWindows ? 'win32' : 'posix']
-                const { resolve } = path
                 const prefix = isWindows ? (
                   global ? (
                     top ? 'c:\\path\\to\\prefix\\node_modules\\'
-                      : 'c:\\path\\to\\prefix\\node_modules\\xyz\\node_modules\\'
+                    : 'c:\\path\\to\\prefix\\node_modules\\xyz\\node_modules\\'
                   ) : (
                     top ? 'c:\\path\\to\\'
-                      : 'c:\\path\\to\\project\\node_modules\\'
+                    : 'c:\\path\\to\\project\\node_modules\\'
                   )
                 ) : (
                   global ? (
                     top ? '/usr/local/lib/node_modules/'
-                      : '/usr/local/lib/node_modules/xyz/node_modules/'
+                    : '/usr/local/lib/node_modules/xyz/node_modules/'
                   ) : (
                     top ? '/path/to/'
-                      : '/path/to/project/node_modules/'
+                    : '/path/to/project/node_modules/'
                   )
                 )
 
@@ -69,7 +68,7 @@ for (const isWindows of [true, false]) {
                     force,
                     global,
                     top,
-                  }), 'scoped pkg')
+                  }), 'scoped pkg'),
                 ])
               })
             }
@@ -84,10 +83,10 @@ t.test('the resetSeen() method calls appropriate resets', t => {
   const binLinks = requireInject('../', {
     '../lib/shim-bin.js': { resetSeen: () => {
       t.pass('shimBin.resetSeen() called')
-    }},
+    } },
     '../lib/link-gently.js': { resetSeen: () => {
       t.pass('linkGently.resetSeen() called')
-    }},
+    } },
   })
   t.plan(2)
   binLinks.resetSeen()

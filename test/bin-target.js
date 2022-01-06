@@ -1,6 +1,5 @@
 const requireInject = require('require-inject')
 const t = require('tap')
-const isWindows = require('../lib/is-windows.js')
 
 for (const isWindows of [true, false]) {
   t.test(isWindows ? 'win32' : 'posix', t => {

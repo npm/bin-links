@@ -3,9 +3,9 @@ const requireInject = require('require-inject')
 
 t.test('always ok when forced ', async t => {
   const checkBin = requireInject('../lib/check-bin.js')
-  t.resolves(checkBin({force: true}), 'ok when forced')
-  t.resolves(checkBin({global: false}), 'ok when local')
-  t.resolves(checkBin({global: true, top: false}), 'ok when not top')
+  t.resolves(checkBin({ force: true }), 'ok when forced')
+  t.resolves(checkBin({ global: false }), 'ok when local')
+  t.resolves(checkBin({ global: true, top: false }), 'ok when not top')
 })
 
 t.test('windows', async t => {
@@ -95,7 +95,7 @@ t.test('not windows', async t => {
       foo: t.fixture('symlink', '../lib/node_modules/foo/foo.js'),
       notalink: 'hello',
       dir: {},
-    }
+    },
   })
 
   t.rejects(checkBin({
