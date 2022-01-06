@@ -4,11 +4,15 @@
   "description": "JavaScript package binary linker",
   "main": "index.js",
   "scripts": {
-    "preversion": "npm t",
+    "preversion": "npm test",
     "postversion": "npm publish",
-    "prepublishOnly": "git push --follow-tags",
+    "prepublishOnly": "git push origin --follow-tags",
     "snap": "tap",
-    "test": "tap"
+    "test": "tap",
+    "lint": "eslint '**/*.js'",
+    "postlint": "npm-template-check",
+    "lintfix": "npm run lint -- --fix",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -29,6 +33,7 @@
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
+    "@npmcli/template-oss": "^2.5.0",
     "mkdirp": "^1.0.3",
     "require-inject": "^1.4.4",
     "tap": "^15.0.10"
@@ -38,10 +43,15 @@
     "coverage-map": "map.js"
   },
   "files": [
-    "index.js",
-    "lib/*.js"
+    "bin",
+    "lib"
   ],
   "engines": {
-    "node": ">=10"
+    "node": "^12.13.0 || ^14.15.0 || >=16"
+  },
+  "author": "GitHub Inc.",
+  "templateOSS": {
+    "windowsCI": false,
+    "version": "2.5.0"
   }
 }
