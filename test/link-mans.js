@@ -2,7 +2,7 @@ const t = require('tap')
 
 const requireInject = require('require-inject')
 const linkMans = requireInject('../lib/link-mans.js', {
-  '../lib/link-gently.js': ({from, to}) => Promise.resolve(`LINK ${from} ${to}`),
+  '../lib/link-gently.js': ({ from, to }) => Promise.resolve(`LINK ${from} ${to}`),
 })
 
 t.test('not top/global', t => linkMans({
@@ -36,7 +36,7 @@ t.test('link some mans', t => linkMans({
   },
   top: true,
   path: '/usr/local/lib/node_modules/pkg',
-}).then(res => t.strictSame(res.sort((a,b)=>a.localeCompare(b)), [
+}).then(res => t.strictSame(res.sort((a, b) => a.localeCompare(b)), [
   'LINK ../../../lib/node_modules/pkg/c/path/to/passwd.2 /usr/local/share/man/man2/passwd.2',
   'LINK ../../../lib/node_modules/pkg/docs/foo.1 /usr/local/share/man/man1/foo.1',
   'LINK ../../../lib/node_modules/pkg/foo.1 /usr/local/share/man/man1/foo.1',

@@ -1,5 +1,4 @@
 const t = require('tap')
-const requireInject = require('require-inject')
 const getNodeModules = require('../lib/get-node-modules.js', {
   path: require('path').posix,
 })

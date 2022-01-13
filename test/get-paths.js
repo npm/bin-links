@@ -28,22 +28,21 @@ for (const isWindows of [true, false]) {
         for (const top of [true, false]) {
           t.test(top ? 'top' : 'nested', t => {
             const path = require('path')[isWindows ? 'win32' : 'posix']
-            const { resolve } = path
             const prefix = isWindows ? (
               global ? (
                 top ? 'c:\\path\\to\\prefix\\node_modules\\'
-                  : 'c:\\path\\to\\prefix\\node_modules\\xyz\\node_modules\\'
+                : 'c:\\path\\to\\prefix\\node_modules\\xyz\\node_modules\\'
               ) : (
                 top ? 'c:\\path\\to\\'
-                  : 'c:\\path\\to\\project\\node_modules\\'
+                : 'c:\\path\\to\\project\\node_modules\\'
               )
             ) : (
               global ? (
                 top ? '/usr/local/lib/node_modules/'
-                  : '/usr/local/lib/node_modules/xyz/node_modules/'
+                : '/usr/local/lib/node_modules/xyz/node_modules/'
               ) : (
                 top ? '/path/to/'
-                  : '/path/to/project/node_modules/'
+                : '/path/to/project/node_modules/'
               )
             )
 
@@ -55,7 +54,6 @@ for (const isWindows of [true, false]) {
             t.plan(3)
             for (const pkg of [both, nobin, badman]) {
               t.test(pkg.name, t => {
-
                 t.matchSnapshot(getPaths({
                   path: prefix + 'foo',
                   pkg,

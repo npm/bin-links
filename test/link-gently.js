@@ -124,7 +124,7 @@ t.test('racey race', async t => {
       absFrom: `${dir}/otherpkg/hello.js`,
       force: true,
     }),
-    new Promise((res) => fs.symlink(__filename, `${dir}/racecar`, 'file', res))
+    new Promise((res) => fs.symlink(__filename, `${dir}/racecar`, 'file', res)),
   ]).then(() => {
     const target = fs.readlinkSync(`${dir}/racecar`)
     t.match(target, /^\.\/(other)?pkg\/hello\.js$/, 'should link to one of them')
