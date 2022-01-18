@@ -1,5 +1,21 @@
 # Change Log
 
+## [3.0.0](https://www.github.com/npm/bin-links/compare/v2.3.0...v3.0.0) (2022-01-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* This drops support for node10 and non-LTS versions of node12 and node14
+
+### Bug Fixes
+
+* template-oss ([#30](https://www.github.com/npm/bin-links/issues/30)) ([3a50664](https://www.github.com/npm/bin-links/commit/3a5066464dc3497be7aaa39a19444494c41bc9a9))
+
+
+### dependencies
+
+* write-file-atomic@4.0.0 ([#32](https://www.github.com/npm/bin-links/issues/32)) ([788d0ee](https://www.github.com/npm/bin-links/commit/788d0ee94841b20651d300acb4b1ca607192efcd))
+
 ## 2.0.0
 
 * Rewrite to promisify and remove dependence on gentle-fs
