@@ -30,7 +30,7 @@
     "npm-normalize-package-bin": "^1.0.0",
     "read-cmd-shim": "^2.0.0",
     "rimraf": "^3.0.0",
-    "write-file-atomic": "^3.0.3"
+    "write-file-atomic": "^4.0.0"
   },
   "devDependencies": {
     "@npmcli/template-oss": "^2.5.0",
