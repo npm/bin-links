@@ -1,5 +1,18 @@
 # Change Log
 
+### [3.0.1](https://www.github.com/npm/bin-links/compare/v3.0.0...v3.0.1) (2022-04-05)
+
+
+### Bug Fixes
+
+* replace deprecated String.prototype.substr() ([#38](https://www.github.com/npm/bin-links/issues/38)) ([56dbfa0](https://www.github.com/npm/bin-links/commit/56dbfa06ee1efc9224fa7e8b8cab71643feff664))
+
+
+### dependencies
+
+* bump cmd-shim from 4.1.0 to 5.0.0 ([#39](https://www.github.com/npm/bin-links/issues/39)) ([24a1f3c](https://www.github.com/npm/bin-links/commit/24a1f3cfb5b98a9e58ff59c0627877a20762a7ed))
+* bump read-cmd-shim from 2.0.0 to 3.0.0 ([#40](https://www.github.com/npm/bin-links/issues/40)) ([36a652f](https://www.github.com/npm/bin-links/commit/36a652f50c09c88447893305a8ed9ec2c2f27b85))
+
 ## [3.0.0](https://www.github.com/npm/bin-links/compare/v2.3.0...v3.0.0) (2022-01-18)
 
 
