@@ -96,7 +96,7 @@ t.test('racey race', async t => {
       setTimeout(() => fs.symlink(path, dest, type, cb), 200)
     },
   }
-  const linkGently = requireInject('../lib/link-gently.js', {
+  const mockedLinkGently = requireInject('../lib/link-gently.js', {
     fs: fsMock,
   })
   const dir = t.testdir({
@@ -110,14 +110,14 @@ t.test('racey race', async t => {
     existingFile: 'hello',
   })
   return Promise.all([
-    linkGently({
+    mockedLinkGently({
       path: `${dir}/pkg`,
       from: `./pkg/hello.js`,
       to: `${dir}/racecar`,
       absFrom: `${dir}/pkg/hello.js`,
       force: true,
     }),
-    linkGently({
+    mockedLinkGently({
       path: `${dir}/otherpkg`,
       from: `./otherpkg/hello.js`,
       to: `${dir}/racecar`,

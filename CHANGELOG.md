@@ -1,4 +1,4 @@
-# Change Log
+# Changelog
 
 ## [3.0.0](https://www.github.com/npm/bin-links/compare/v2.3.0...v3.0.0) (2022-01-18)
 
