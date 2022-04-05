@@ -86,7 +86,7 @@ t.test('eperm on stat', async t => {
     mkdirp,
     fs: {
       ...fs,
-      lstat: (path, cb) => cb(Object.assign(new Error('wakawaka'), {
+      lstat: (_, cb) => cb(Object.assign(new Error('wakawaka'), {
         code: 'EPERM',
       })),
     },
@@ -114,7 +114,7 @@ t.test('strange enoent from read-cmd-shim', async t => {
   const shimBin = requireInject('../lib/shim-bin.js', {
     path,
     mkdirp,
-    'read-cmd-shim': path => Promise.reject(Object.assign(new Error('xyz'), {
+    'read-cmd-shim': () => Promise.reject(Object.assign(new Error('xyz'), {
       code: 'ENOENT',
     })),
   })
@@ -164,7 +164,7 @@ t.test('unknown error from read-cmd-shim', async t => {
   const shimBin = requireInject('../lib/shim-bin.js', {
     path,
     mkdirp,
-    'read-cmd-shim': path => Promise.reject(Object.assign(new Error('xyz'), {
+    'read-cmd-shim': () => Promise.reject(Object.assign(new Error('xyz'), {
       code: 'ELDERGAWDS',
     })),
   })

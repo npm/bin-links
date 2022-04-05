@@ -37,7 +37,7 @@ t.test('failure to read means not a windows hash bang file', t => {
       process.nextTick(() => cb(new Error('witaf')))
     },
   }
-  const fixBin = requireInject('../lib/fix-bin.js', {
+  const mockedFixBin = requireInject('../lib/fix-bin.js', {
     fs: fsMock,
   })
 
@@ -45,7 +45,7 @@ t.test('failure to read means not a windows hash bang file', t => {
     whb: `#!/usr/bin/env node\r\nconsole.log('hello')\r\n`,
   })
   chmodSync(`${dir}/whb`, 0o644)
-  return fixBin(`${dir}/whb`).then(() => {
+  return mockedFixBin(`${dir}/whb`).then(() => {
     t.equal((statSync(`${dir}/whb`).mode & 0o777), 0o777 & (~umask), 'has exec perms')
     t.equal(readFileSync(`${dir}/whb`, 'utf8'),
       /* eslint-disable-next-line max-len */
@@ -61,7 +61,7 @@ t.test('failure to close is ignored', t => {
       process.nextTick(() => cb(new Error('witaf')))
     },
   }
-  const fixBin = requireInject('../lib/fix-bin.js', {
+  const mockedFixBin = requireInject('../lib/fix-bin.js', {
     fs: fsMock,
   })
 
@@ -69,7 +69,7 @@ t.test('failure to close is ignored', t => {
     whb: `#!/usr/bin/env node\r\nconsole.log('hello')\r\n`,
   })
   chmodSync(`${dir}/whb`, 0o644)
-  return fixBin(`${dir}/whb`).then(() => {
+  return mockedFixBin(`${dir}/whb`).then(() => {
     t.equal((statSync(`${dir}/whb`).mode & 0o777), 0o777 & (~umask), 'has exec perms')
     t.equal(readFileSync(`${dir}/whb`, 'utf8'),
       /* eslint-disable-next-line max-len */
