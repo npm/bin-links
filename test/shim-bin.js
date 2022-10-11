@@ -3,7 +3,6 @@ const requireInject = require('require-inject')
 const fs = require('fs')
 const { statSync } = fs
 const path = require('path').win32
-const mkdirp = require('mkdirp')
 
 t.test('basic shim bin', async t => {
   const dir = t.testdir({
@@ -15,7 +14,7 @@ t.test('basic shim bin', async t => {
     },
     notashim: 'definitely not',
   })
-  const shimBin = requireInject('../lib/shim-bin.js', { path, mkdirp })
+  const shimBin = requireInject('../lib/shim-bin.js', { path })
   await shimBin({
     path: `${dir}/pkg`,
     to: `${dir}/bin/hello`,
@@ -83,10 +82,9 @@ t.test('eperm on stat', async t => {
   })
   const shimBin = requireInject('../lib/shim-bin.js', {
     path,
-    mkdirp,
-    fs: {
-      ...fs,
-      lstat: (_, cb) => cb(Object.assign(new Error('wakawaka'), {
+    'fs/promises': {
+      ...fs.promises,
+      lstat: () => Promise.reject(Object.assign(new Error('wakawaka'), {
         code: 'EPERM',
       })),
     },
@@ -113,7 +111,6 @@ t.test('strange enoent from read-cmd-shim', async t => {
   })
   const shimBin = requireInject('../lib/shim-bin.js', {
     path,
-    mkdirp,
     'read-cmd-shim': () => Promise.reject(Object.assign(new Error('xyz'), {
       code: 'ENOENT',
     })),
@@ -163,7 +160,6 @@ t.test('unknown error from read-cmd-shim', async t => {
   })
   const shimBin = requireInject('../lib/shim-bin.js', {
     path,
-    mkdirp,
     'read-cmd-shim': () => Promise.reject(Object.assign(new Error('xyz'), {
       code: 'ELDERGAWDS',
     })),

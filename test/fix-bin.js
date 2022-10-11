@@ -29,14 +29,18 @@ t.test('dont fix non-windows hashbang file', async t => {
 
 t.test('failure to read means not a windows hash bang file', async t => {
   const fsMock = {
-    ...fs,
-    read: (a, b, c, d, e, cb) => {
-      fsMock.read = null
-      process.nextTick(() => cb(new Error('witaf')))
+    ...fs.promises,
+    open: async (...args) => {
+      const fh = await fs.promises.open(...args)
+      fh.read = async () => {
+        throw new Error('witaf')
+      }
+      return fh
     },
   }
+
   const mockedFixBin = requireInject('../lib/fix-bin.js', {
-    fs: fsMock,
+    'fs/promises': fsMock,
   })
 
   const dir = t.testdir({
@@ -52,14 +56,17 @@ t.test('failure to read means not a windows hash bang file', async t => {
 
 t.test('failure to close is ignored', async t => {
   const fsMock = {
-    ...fs,
-    close: (fd, cb) => {
-      fsMock.close = fs.close
-      process.nextTick(() => cb(new Error('witaf')))
+    ...fs.promises,
+    open: async (...args) => {
+      const fh = await fs.promises.open(...args)
+      fh.close = async () => {
+        throw new Error('witaf')
+      }
+      return fh
     },
   }
   const mockedFixBin = requireInject('../lib/fix-bin.js', {
-    fs: fsMock,
+    'fs/promises': fsMock,
   })
 
   const dir = t.testdir({
