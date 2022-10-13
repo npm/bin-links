@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.0.0](https://github.com/npm/bin-links/compare/v3.0.3...v4.0.0) (2022-10-13)
+
+### ⚠️ BREAKING CHANGES
+
+* this module no longer attempts to change file ownership automatically
+* `bin-links` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+
+### Features
+
+* [`4f4c58c`](https://github.com/npm/bin-links/commit/4f4c58cd30acac8e26f76f5e0e534b94f0e353db) [#59](https://github.com/npm/bin-links/pull/59) do not alter file ownership (#59) (@nlf)
+* [`36b2668`](https://github.com/npm/bin-links/commit/36b2668aad3495f256b392b2ba9dd41487e72b41) [#52](https://github.com/npm/bin-links/pull/52) postinstall for dependabot template-oss PR (@lukekarrys)
+
 ## [3.0.3](https://github.com/npm/bin-links/compare/v3.0.2...v3.0.3) (2022-08-23)
 
 
