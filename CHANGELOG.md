@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.0.1](https://github.com/npm/bin-links/compare/v4.0.0...v4.0.1) (2022-10-17)
+
+### Dependencies
+
+* [`cf738fb`](https://github.com/npm/bin-links/commit/cf738fb3ec95539fe7c81f2508ba34f4662e9bc2) [#62](https://github.com/npm/bin-links/pull/62) bump read-cmd-shim from 3.0.1 to 4.0.0
+* [`61717bf`](https://github.com/npm/bin-links/commit/61717bfe2f56b71b68febcc10980462b7dac72a0) [#64](https://github.com/npm/bin-links/pull/64) bump write-file-atomic from 4.0.2 to 5.0.0
+* [`d26ec29`](https://github.com/npm/bin-links/commit/d26ec2945571fc7f9b27416c0f8de201d0ca0df9) [#61](https://github.com/npm/bin-links/pull/61) bump npm-normalize-package-bin from 2.0.0 to 3.0.0
+
 ## [4.0.0](https://github.com/npm/bin-links/compare/v3.0.3...v4.0.0) (2022-10-13)
 
 ### ⚠️ BREAKING CHANGES
