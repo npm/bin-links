@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.0.2](https://github.com/npm/bin-links/compare/v4.0.1...v4.0.2) (2023-07-11)
+
+### Bug Fixes
+
+* [`08f8981`](https://github.com/npm/bin-links/commit/08f898114accd24f70714a6a5b253cc93f91e509) [#80](https://github.com/npm/bin-links/pull/80) don’t try to chmod unlinked files (#80) (@remcohaszing)
+
 ## [4.0.1](https://github.com/npm/bin-links/compare/v4.0.0...v4.0.1) (2022-10-17)
 
 ### Dependencies
