@@ -109,7 +109,7 @@ t.test('racey race', async t => {
     existingLink: t.fixture('symlink', './pkg/hello.js'),
     existingFile: 'hello',
   })
-  await Promise.all([
+  const multipleLinked = await Promise.all([
     mockedLinkGently({
       path: `${dir}/pkg`,
       from: `./pkg/hello.js`,
@@ -126,6 +126,8 @@ t.test('racey race', async t => {
     }),
     new Promise((res) => fs.symlink(__filename, `${dir}/racecar`, 'file', res)),
   ])
+  t.ok(multipleLinked[0] || multipleLinked[1], 'should link one path succesfully')
+  t.notSame(multipleLinked[0], multipleLinked[1], 'should fail to link the other path')
   const target = fs.readlinkSync(`${dir}/racecar`)
   t.match(target, /^\.\/(other)?pkg\/hello\.js$/, 'should link to one of them')
 })
