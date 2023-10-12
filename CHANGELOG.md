@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.0.3](https://github.com/npm/bin-links/compare/v4.0.2...v4.0.3) (2023-10-12)
+
+### Bug Fixes
+
+* [`af17744`](https://github.com/npm/bin-links/commit/af1774455f0dc342840ebe6b8dd5ee946dcda5e2) [#100](https://github.com/npm/bin-links/pull/100) promisify/cleanup link-mans and simplify regex (#100) (@wraithgar)
+
 ## [4.0.2](https://github.com/npm/bin-links/compare/v4.0.1...v4.0.2) (2023-07-11)
 
 ### Bug Fixes

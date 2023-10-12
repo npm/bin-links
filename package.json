@@ -1,6 +1,6 @@
 {
   "name": "bin-links",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "JavaScript package binary linker",
   "main": "./lib/index.js",
   "scripts": {
