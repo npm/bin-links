@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.0.4](https://github.com/npm/bin-links/compare/v4.0.3...v4.0.4) (2024-05-04)
+
+### Bug Fixes
+
+* [`100a4b7`](https://github.com/npm/bin-links/commit/100a4b73111065aebc5284f5f7060c9665c4279a) [#117](https://github.com/npm/bin-links/pull/117) linting: no-unused-vars (@lukekarrys)
+
+### Chores
+
+* [`e955437`](https://github.com/npm/bin-links/commit/e955437eef356ea8edb344448086a23a8fe38f03) [#117](https://github.com/npm/bin-links/pull/117) bump @npmcli/template-oss to 4.22.0 (@lukekarrys)
+* [`b602aca`](https://github.com/npm/bin-links/commit/b602acab28889793a96b06dedc1c66d225223999) [#117](https://github.com/npm/bin-links/pull/117) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`955cc34`](https://github.com/npm/bin-links/commit/955cc3407ddcb579ef8da2d4247103c68972fb52) [#116](https://github.com/npm/bin-links/pull/116) bump @npmcli/template-oss from 4.21.3 to 4.21.4 (@dependabot[bot])
+
 ## [4.0.3](https://github.com/npm/bin-links/compare/v4.0.2...v4.0.3) (2023-10-12)
 
 ### Bug Fixes
