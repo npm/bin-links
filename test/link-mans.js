@@ -3,6 +3,7 @@ const t = require('tap')
 const requireInject = require('require-inject')
 const linkMans = requireInject('../lib/link-mans.js', {
   '../lib/link-gently.js': ({ from, to }) => Promise.resolve(`LINK ${from} ${to}`),
+  'ci-info': { isCI: false },
 })
 
 t.test('not top/global', t => linkMans({

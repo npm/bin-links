@@ -49,6 +49,7 @@ for (const isWindows of [true, false]) {
             const getPaths = requireInject('../lib/get-paths.js', {
               path,
               '../lib/is-windows.js': isWindows,
+              'ci-info': { isCI: false },
             })
 
             t.plan(3)

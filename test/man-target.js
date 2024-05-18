@@ -6,6 +6,7 @@ for (const isWindows of [true, false]) {
     const manTarget = requireInject('../lib/man-target.js', {
       '../lib/is-windows.js': isWindows,
       path: require('path')[isWindows ? 'win32' : 'posix'],
+      'ci-info': { isCI: false },
     })
 
     t.matchSnapshot(manTarget({
