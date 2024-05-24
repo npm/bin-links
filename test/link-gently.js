@@ -1,6 +1,7 @@
 const t = require('tap')
 const linkGently = require('../lib/link-gently.js')
 const fs = require('fs')
+const fsp = require('fs/promises')
 const requireInject = require('require-inject')
 
 t.test('make links gently', async t => {
@@ -85,6 +86,48 @@ t.test('make links gently', async t => {
   })
   t.throws(() => fs.readlinkSync(`${dir}/bin/missing`), { code: 'ENOENT' })
   linkGently.resetSeen()
+})
+
+t.test('handles link errors', async t => {
+  const dir = t.testdir({
+    pkg: {
+      'hello.js': `#!/usr/bin/env node\nconsole.log('hello')`,
+    },
+  })
+  const fspMock = {
+    ...fsp,
+    lstat: (ref) => {
+      const code = (/\/(e\w+)$/.exec(ref) || [])[1]
+      if (code) {
+        return Promise.reject(Object.assign(new Error(), { code: code.toUpperCase() }))
+      }
+
+      return fsp.lstat(ref)
+    },
+  }
+  const mockedLinkGently = requireInject('../lib/link-gently.js', {
+    'fs/promises': fspMock,
+  })
+  await mockedLinkGently({
+    path: `${dir}/pkg`,
+    to: `${dir}/bin/eacces`,
+    from: `../pkg/hello.js`,
+    absFrom: `${dir}/pkg/hello.js`,
+  })
+
+  await mockedLinkGently({
+    path: `${dir}/pkg`,
+    to: `${dir}/bin/enoent`,
+    from: `../pkg/hello.js`,
+    absFrom: `${dir}/pkg/hello.js`,
+  })
+
+  await t.rejects(mockedLinkGently({
+    path: `${dir}/pkg`,
+    to: `${dir}/bin/eperm`,
+    from: `../pkg/hello.js`,
+    absFrom: `${dir}/pkg/hello.js`,
+  }), { code: 'EPERM' })
 })
 
 t.test('racey race', async t => {
