@@ -27,7 +27,7 @@
     "cmd-shim": "^6.0.0",
     "npm-normalize-package-bin": "^3.0.0",
     "proc-log": "^4.2.0",
-    "read-cmd-shim": "^4.0.0",
+    "read-cmd-shim": "^5.0.0",
     "write-file-atomic": "^5.0.0"
   },
   "devDependencies": {
