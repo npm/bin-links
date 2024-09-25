@@ -1,5 +1,25 @@
 # Changelog
 
+## [5.0.0](https://github.com/npm/bin-links/compare/v4.0.4...v5.0.0) (2024-09-25)
+### ⚠️ BREAKING CHANGES
+* `bin-links` now supports node `^18.17.0 || >=20.5.0`
+### Features
+* [`9648a7d`](https://github.com/npm/bin-links/commit/9648a7d49589be1c991ddc3c2842c461e2a017cb) [#121](https://github.com/npm/bin-links/pull/121) ignore EACCES on linking (@antongolub)
+### Bug Fixes
+* [`013be50`](https://github.com/npm/bin-links/commit/013be506a28d014e0db023457e084789f414b287) [#139](https://github.com/npm/bin-links/pull/139) align to npm 10 node engine range (@reggi)
+### Dependencies
+* [`a08d09b`](https://github.com/npm/bin-links/commit/a08d09b7e823a8ca321bcab3f6168bdd8057e3cd) [#139](https://github.com/npm/bin-links/pull/139) `write-file-atomic@6.0.0`
+* [`7d90298`](https://github.com/npm/bin-links/commit/7d9029869e4759dcaa5f90667c62840898c07c6a) [#139](https://github.com/npm/bin-links/pull/139) `read-cmd-shim@5.0.0`
+* [`0c915a3`](https://github.com/npm/bin-links/commit/0c915a3daf8548f7b9d8576ff53cd92db575eeec) [#139](https://github.com/npm/bin-links/pull/139) `proc-log@5.0.0`
+* [`502417c`](https://github.com/npm/bin-links/commit/502417c398b67175d9961f954eb6e54388d4559d) [#139](https://github.com/npm/bin-links/pull/139) `npm-normalize-package-bin@4.0.0`
+* [`722452a`](https://github.com/npm/bin-links/commit/722452a3276803217ffd866cd5d65383d74c4591) [#139](https://github.com/npm/bin-links/pull/139) `cmd-shim@7.0.0`
+* [`af7e347`](https://github.com/npm/bin-links/commit/af7e347bbf2346741500df4906c948f5f02e19fb) [#121](https://github.com/npm/bin-links/pull/121) add proc-log
+### Chores
+* [`463c32f`](https://github.com/npm/bin-links/commit/463c32fed8b131c9cea5488fcfe9102200cbf6e9) [#139](https://github.com/npm/bin-links/pull/139) run template-oss-apply (@reggi)
+* [`ba52600`](https://github.com/npm/bin-links/commit/ba52600cf31a9bfc9db983e6fc622291a61c985a) [#133](https://github.com/npm/bin-links/pull/133) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+* [`fdf22ae`](https://github.com/npm/bin-links/commit/fdf22ae617daa5ad6516c14def9e291f2367542c) [#134](https://github.com/npm/bin-links/pull/134) postinstall for dependabot template-oss PR (@hashtagchris)
+* [`d949f7d`](https://github.com/npm/bin-links/commit/d949f7de78aa0d58e0cf228f816215678878278c) [#134](https://github.com/npm/bin-links/pull/134) bump @npmcli/template-oss from 4.23.1 to 4.23.3 (@dependabot[bot])
+
 ## [4.0.4](https://github.com/npm/bin-links/compare/v4.0.3...v4.0.4) (2024-05-04)
 
 ### Bug Fixes
