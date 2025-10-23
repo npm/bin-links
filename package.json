@@ -24,7 +24,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "cmd-shim": "^7.0.0",
+    "cmd-shim": "^8.0.0",
     "npm-normalize-package-bin": "^4.0.0",
     "proc-log": "^5.0.0",
     "read-cmd-shim": "^5.0.0",
