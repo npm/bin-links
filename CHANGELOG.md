@@ -1,5 +1,21 @@
 # Changelog
 
+## [6.0.0](https://github.com/npm/bin-links/compare/v5.0.0...v6.0.0) (2025-10-23)
+### ⚠️ BREAKING CHANGES
+* `bin-links` now supports node `^20.17.0 || >=22.9.0`
+### Bug Fixes
+* [`c9a1234`](https://github.com/npm/bin-links/commit/c9a1234407b3d05d968a55f83dfcc7732081b846) [#155](https://github.com/npm/bin-links/pull/155) align to npm 11 node engine range (@owlstronaut)
+### Dependencies
+* [`efcd20a`](https://github.com/npm/bin-links/commit/efcd20a0cab2d0f4bb2a03201ee76e65b79695b8) [#155](https://github.com/npm/bin-links/pull/155) `write-file-atomic@7.0.0`
+* [`420e37e`](https://github.com/npm/bin-links/commit/420e37e979318c016811327f57f574f7e41ce2de) [#155](https://github.com/npm/bin-links/pull/155) `read-cmd-shim@6.0.0`
+* [`7c3e533`](https://github.com/npm/bin-links/commit/7c3e5330565810ef07b9f8c1a1f3c67516a18015) [#155](https://github.com/npm/bin-links/pull/155) `npm-normalize-package-bin@5.0.0`
+* [`cd743b9`](https://github.com/npm/bin-links/commit/cd743b9fd3fe7d179e6f9ffbcbd464e6976fa301) [#155](https://github.com/npm/bin-links/pull/155) `proc-log@6.0.0`
+* [`90efc68`](https://github.com/npm/bin-links/commit/90efc6890849e93d1148b1d336d233771490e92e) [#155](https://github.com/npm/bin-links/pull/155) `cmd-shim@8.0.0`
+### Chores
+* [`4263d38`](https://github.com/npm/bin-links/commit/4263d38388b607125f47d4cba96f0e0f782679a3) [#155](https://github.com/npm/bin-links/pull/155) template-oss-apply (@owlstronaut)
+* [`d4631bf`](https://github.com/npm/bin-links/commit/d4631bfcea005b5779f947accda06ad84d712ea5) [#142](https://github.com/npm/bin-links/pull/142) postinstall workflow updates (#142) (@owlstronaut)
+* [`6aa852d`](https://github.com/npm/bin-links/commit/6aa852d6ad1a910e4c75ce0d3dec2a7ce594e37c) [#148](https://github.com/npm/bin-links/pull/148) bump @npmcli/template-oss from 4.26.0 to 4.27.1 (#148) (@dependabot[bot], @npm-cli-bot)
+
 ## [5.0.0](https://github.com/npm/bin-links/compare/v4.0.4...v5.0.0) (2024-09-25)
 ### ⚠️ BREAKING CHANGES
 * `bin-links` now supports node `^18.17.0 || >=20.5.0`
