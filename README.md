@@ -1,7 +1,7 @@
 # bin-links [![npm version](https://img.shields.io/npm/v/bin-links.svg)](https://npm.im/bin-links) [![license](https://img.shields.io/npm/l/bin-links.svg)](https://npm.im/bin-links) [![Travis](https://img.shields.io/travis/npm/bin-links.svg)](https://travis-ci.org/npm/bin-links) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/npm/bin-links?svg=true)](https://ci.appveyor.com/project/npm/bin-links) [![Coverage Status](https://coveralls.io/repos/github/npm/bin-links/badge.svg?branch=latest)](https://coveralls.io/github/npm/bin-links?branch=latest)
 
 [`bin-links`](https://github.com/npm/bin-links) is a standalone library that links
-binaries and man pages for JavaScript packages
+binaries for JavaScript packages
 
 ## Install
 
@@ -43,9 +43,10 @@ binLinks({
   `node_modules/.bin` directory of the installing environment.  (Or
   `${prefix}/bin` for top level global packages on unix, and `${prefix}`
   for top level global packages on Windows.)
-* Links man files listed under the `man` property of pkg to the share/man
-  directory.  (This is only done for top-level global packages on Unix
-  systems.)
+* As of v7, `bin-links` no longer installs man pages.  Global installs
+  used to create symlinks under `${prefix}/share/man`; this is no longer
+  done.  Pre-existing man symlinks from older installs are still
+  reported by `getPaths()` so that `npm uninstall -g` can clean them up.
 
 ### Contributing
 
