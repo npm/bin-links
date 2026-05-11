@@ -93,6 +93,26 @@ t.test('custom exec mode', async t => {
     `#!/usr/bin/env node\nconsole.log('hello')\r\n`, 'fixed \\r on hashbang line')
 })
 
+t.test('skip chmod if file already has exec permissions', async t => {
+  const fsMock = {
+    ...fs.promises,
+    chmod: async () => {
+      throw new Error('chmod should not be called')
+    },
+  }
+  const mockedFixBin = requireInject('../lib/fix-bin.js', {
+    'fs/promises': fsMock,
+  })
+
+  const dir = t.testdir({
+    execfile: `#!/usr/bin/env node\nconsole.log('hello')\n`,
+  })
+  chmodSync(`${dir}/execfile`, 0o755)
+  // should not throw even though chmod is mocked to throw
+  await mockedFixBin(`${dir}/execfile`, 0o755)
+  t.equal((statSync(`${dir}/execfile`).mode & 0o755), 0o755 & (~umask), 'still has exec perms')
+})
+
 t.test('custom exec mode in windows', async t => {
   const dir = t.testdir({
     goodhb: `#!/usr/bin/env node\r\nconsole.log('hello')\r\n`,
