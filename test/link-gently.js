@@ -9,6 +9,9 @@ t.test('make links gently', async t => {
     pkg: {
       'hello.js': `#!/usr/bin/env node\nconsole.log('hello')`,
     },
+    pk: {
+      'hello.js': `#!/usr/bin/env node\nconsole.log('prefix collision')`,
+    },
     otherpkg: {
       'hello.js': `#!/usr/bin/env node\nconsole.log('other hello')`,
     },
@@ -85,6 +88,24 @@ t.test('make links gently', async t => {
     absFrom: `${dir}/pkg/missing.js`,
   })
   t.throws(() => fs.readlinkSync(`${dir}/bin/missing`), { code: 'ENOENT' })
+  linkGently.resetSeen()
+
+  // prefix collision: "pk" should NOT clobber a symlink owned by "pkg"
+  linkResult = await linkGently({
+    path: `${dir}/pkg`,
+    to: `${dir}/bin/collide`,
+    from: `../pkg/hello.js`,
+    absFrom: `${dir}/pkg/hello.js`,
+  })
+  t.equal(linkResult, true, 'legitimate link created')
+  linkGently.resetSeen()
+  await t.rejects(linkGently({
+    path: `${dir}/pk`,
+    to: `${dir}/bin/collide`,
+    from: `../pk/hello.js`,
+    absFrom: `${dir}/pk/hello.js`,
+  }), { code: 'EEXIST' }, 'rejects prefix-colliding package name')
+  t.equal(fs.readlinkSync(`${dir}/bin/collide`), '../pkg/hello.js', 'original symlink preserved')
   linkGently.resetSeen()
 })
 
