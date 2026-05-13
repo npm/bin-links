@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.0.1](https://github.com/npm/bin-links/compare/v6.0.0...v6.0.1) (2026-05-13)
+### Bug Fixes
+* [`1579ed0`](https://github.com/npm/bin-links/commit/1579ed0058381ca2cdb974d7fa310446c4f03d09) [#176](https://github.com/npm/bin-links/pull/176) use directory-boundary checks for bin ownership validation (@owlstronaut)
+### Chores
+* [`d034a02`](https://github.com/npm/bin-links/commit/d034a02c4088207eeae2f0435c98966ae181cb91) [#176](https://github.com/npm/bin-links/pull/176) `template-oss@4.30.0` (@owlstronaut)
+* [`924b9ed`](https://github.com/npm/bin-links/commit/924b9ed9b9be4da88161e2ba0f21bdf904ee88c8) [#176](https://github.com/npm/bin-links/pull/176) template-oss-apply (@owlstronaut)
+* [`4c70505`](https://github.com/npm/bin-links/commit/4c7050592338cb290bbfc79f35d87525d0dfa691) [#174](https://github.com/npm/bin-links/pull/174) template-oss-apply (@owlstronaut)
+
 ## [6.0.0](https://github.com/npm/bin-links/compare/v5.0.0...v6.0.0) (2025-10-23)
 ### ⚠️ BREAKING CHANGES
 * `bin-links` now supports node `^20.17.0 || >=22.9.0`
