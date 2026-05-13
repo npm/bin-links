@@ -9,6 +9,9 @@ t.test('basic shim bin', async t => {
     pkg: {
       'hello.js': `#!/usr/bin/env node\r\nconsole.log('hello')`,
     },
+    pk: {
+      'hello.js': `#!/usr/bin/env node\r\nconsole.log('prefix collision')`,
+    },
     otherpkg: {
       'hello.js': `#!/usr/bin/env node\r\nconsole.log('hello')`,
     },
@@ -52,6 +55,15 @@ t.test('basic shim bin', async t => {
     force: true,
   })
   statSync(`${dir}/notashim.cmd`)
+  // prefix collision: "pk" should NOT be treated as owner of "pkg"'s shims
+  shimBin.resetSeen()
+  await t.rejects(shimBin({
+    path: `${dir}/pk`,
+    to: `${dir}/bin/hello`,
+    from: `../pk/hello.js`,
+    absFrom: `${dir}/pk/hello.js`,
+  }), { code: 'EEXIST' }, 'rejects prefix-colliding package name')
+
   shimBin.resetSeen()
   await shimBin({
     path: `${dir}/pkg`,

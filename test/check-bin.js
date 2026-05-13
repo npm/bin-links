@@ -132,4 +132,12 @@ t.test('not windows', async t => {
     top: true,
     path: `${dir}/lib/node_modules/foo`,
   }))
+
+  // prefix collision: "fo" should NOT be treated as owner of "foo"'s symlink
+  t.rejects(checkBin({
+    bin: 'foo',
+    global: true,
+    top: true,
+    path: `${dir}/lib/node_modules/fo`,
+  }), { code: 'EEXIST' }, 'rejects prefix-colliding package name')
 })
