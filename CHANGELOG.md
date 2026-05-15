@@ -1,5 +1,31 @@
 # Changelog
 
+## [7.0.0](https://github.com/npm/bin-links/compare/v6.0.0...v7.0.0) (2026-05-15)
+### ⚠️ BREAKING CHANGES
+* `bin-links` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
+* template-oss-apply
+* man pages listed in a package's `man` field are no longer linked into the system man path on global install. `man <pkg>` will no longer work for newly installed global packages. Use the package's own help facilities (e.g. `npm help <cmd>`) instead.
+### Features
+* [`0d66567`](https://github.com/npm/bin-links/commit/0d665679449b423191dc5cc424885c8c3e1876b5) [#172](https://github.com/npm/bin-links/pull/172) bump to new node engine range (@owlstronaut)
+* [`c0aaffc`](https://github.com/npm/bin-links/commit/c0aaffcfb5107d4616f8e55d014d6033531dded0) [#172](https://github.com/npm/bin-links/pull/172) template-oss-apply (@owlstronaut)
+* [`2612e67`](https://github.com/npm/bin-links/commit/2612e6734ecec2401c14b55da6e59b947eac7697) [#163](https://github.com/npm/bin-links/pull/163) stop installing man pages for global installs (@owlstronaut)
+### Bug Fixes
+* [`ab6bf0d`](https://github.com/npm/bin-links/commit/ab6bf0dafe2b054fb4558b28be2e5fc21afe76dc) [#173](https://github.com/npm/bin-links/pull/173) use directory-boundary checks for bin ownership validation (@owlstronaut)
+* [`6049f08`](https://github.com/npm/bin-links/commit/6049f089529ee38fd060a68522e75f7819de1a80) [#171](https://github.com/npm/bin-links/pull/171) don't call `chmod` if the bin already has execution permission (@felipecrs)
+### Dependencies
+* [`af7684c`](https://github.com/npm/bin-links/commit/af7684cd2a34b7058d8b8b60ef113bb0c7e07273) [#172](https://github.com/npm/bin-links/pull/172) `write-file-atomic@8.0.0`
+* [`a09e74a`](https://github.com/npm/bin-links/commit/a09e74a21009ce3c373497aad0ce1091484a1446) [#172](https://github.com/npm/bin-links/pull/172) `read-cmd-shim@7.0.0`
+* [`93ec1ba`](https://github.com/npm/bin-links/commit/93ec1ba71678d68e8af2a29ade24835defc22330) [#172](https://github.com/npm/bin-links/pull/172) `proc-log@7.0.0`
+* [`5961e1f`](https://github.com/npm/bin-links/commit/5961e1ff6829449bd91118c210c9cf7a4e202986) [#172](https://github.com/npm/bin-links/pull/172) `npm-normalize-package-bin@6.0.0`
+* [`47c5a72`](https://github.com/npm/bin-links/commit/47c5a72c26e6b060675a5663650134bbea4bdcba) [#172](https://github.com/npm/bin-links/pull/172) `cmd-shim@9.0.0`
+### Chores
+* [`0919da0`](https://github.com/npm/bin-links/commit/0919da03914d9b1ceac4cde221f56b251195eb0b) [#172](https://github.com/npm/bin-links/pull/172) template-oss-apply (@owlstronaut)
+* [`897720a`](https://github.com/npm/bin-links/commit/897720af555208f1c4e7e34b8ee0b826bfc5f0bc) [#172](https://github.com/npm/bin-links/pull/172) bumping @npmcli/template-oss from 4.30.0 to 5.1.0 (@owlstronaut)
+* [`0ff0be3`](https://github.com/npm/bin-links/commit/0ff0be3c62c49bbd2f283aa6d496a60744df5b1f) [#175](https://github.com/npm/bin-links/pull/175) template-oss-apply (@owlstronaut)
+* [`f02cef9`](https://github.com/npm/bin-links/commit/f02cef9db1e3bf948f790620396ebe2c7402347d) [#163](https://github.com/npm/bin-links/pull/163) template-oss-apply (@owlstronaut)
+* [`88eda3f`](https://github.com/npm/bin-links/commit/88eda3fbc7e0a077330e2132276b2e62cd374ed9) bump @npmcli/eslint-config from 5.1.0 to 6.0.0 (#157) (@dependabot[bot])
+* [`0f07dcd`](https://github.com/npm/bin-links/commit/0f07dcd53e03c4624dd9d1901d750bae37f0216f) [#161](https://github.com/npm/bin-links/pull/161) bump @npmcli/template-oss from 4.28.1 to 4.29.0 (#161) (@dependabot[bot], @npm-cli-bot)
+
 ## [6.0.0](https://github.com/npm/bin-links/compare/v5.0.0...v6.0.0) (2025-10-23)
 ### ⚠️ BREAKING CHANGES
 * `bin-links` now supports node `^20.17.0 || >=22.9.0`
