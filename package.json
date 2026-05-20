@@ -57,6 +57,7 @@
     "windowsCI": false,
     "version": "4.30.0",
     "publish": true,
-    "updateNpm": false
+    "updateNpm": false,
+    "latestCiVersion": 24
   }
 }
