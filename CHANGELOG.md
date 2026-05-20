@@ -1,5 +1,9 @@
 # Changelog
 
+## [6.0.2](https://github.com/npm/bin-links/compare/v6.0.1...v6.0.2) (2026-05-20)
+### Bug Fixes
+* [`cc26d31`](https://github.com/npm/bin-links/commit/cc26d31bb32fbf6d7a5e716d9effb6153bfc828d) [#182](https://github.com/npm/bin-links/pull/182) update ci nodejs version (#182) (@owlstronaut)
+
 ## [6.0.1](https://github.com/npm/bin-links/compare/v6.0.0...v6.0.1) (2026-05-13)
 ### Bug Fixes
 * [`1579ed0`](https://github.com/npm/bin-links/commit/1579ed0058381ca2cdb974d7fa310446c4f03d09) [#176](https://github.com/npm/bin-links/pull/176) use directory-boundary checks for bin ownership validation (@owlstronaut)
