@@ -28,8 +28,8 @@ jobs:
         uses: actions/setup-node@v4
         id: node
         with:
-          node-version: 22.x
-          check-latest: contains('22.x', '.x')
+          node-version: 24.x
+          check-latest: contains('24.x', '.x')
       - name: Install Dependencies
         run: npm i --ignore-scripts --no-audit --no-fund
       - name: Fetch Dependabot Metadata
