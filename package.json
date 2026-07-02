@@ -34,7 +34,7 @@
     "@npmcli/eslint-config": "^7.0.0",
     "@npmcli/template-oss": "5.1.1",
     "require-inject": "^1.4.4",
-    "tap": "^16.0.1"
+    "tap": "^20.0.3"
   },
   "tap": {
     "check-coverage": true,
