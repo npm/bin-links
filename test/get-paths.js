@@ -77,3 +77,45 @@ for (const isWindows of [true, false]) {
     }
   })
 }
+
+for (const isWindows of [true, false]) {
+  t.test(`${isWindows ? 'win32' : 'posix'} normalizes bin keys`, t => {
+    const path = require('path')[isWindows ? 'win32' : 'posix']
+    const getPaths = requireInject('../lib/get-paths.js', {
+      path,
+      '../lib/is-windows.js': isWindows,
+    })
+    const pkg = {
+      name: 'evil',
+      bin: {
+        '../../../sentinel': 'bin/traversal.js',
+        '/tmp/absolute': 'bin/absolute.js',
+        '..\\..\\windows': 'bin/windows.js',
+        'C:\\outside\\drive': 'bin/drive.js',
+        invalid: 123,
+      },
+    }
+    const originalBin = { ...pkg.bin }
+    const packagePath = isWindows
+      ? 'c:\\path\\to\\project\\node_modules\\evil'
+      : '/path/to/project/node_modules/evil'
+    const binTarget = isWindows
+      ? 'c:\\path\\to\\project\\node_modules\\.bin'
+      : '/path/to/project/node_modules/.bin'
+    const expected = ['sentinel', 'absolute', 'windows', 'drive']
+      .map(bin => path.resolve(binTarget, bin))
+      .flatMap(bin => [
+        bin,
+        ...(isWindows ? [`${bin}.cmd`, `${bin}.ps1`] : []),
+      ])
+
+    t.strictSame(getPaths({
+      path: packagePath,
+      pkg,
+      global: false,
+      top: false,
+    }), expected)
+    t.strictSame(pkg.bin, originalBin, 'does not mutate package metadata')
+    t.end()
+  })
+}
