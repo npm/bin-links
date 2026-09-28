@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.1](https://github.com/npm/bin-links/compare/v7.0.0...v7.0.1) (2026-09-28)
+### Bug Fixes
+* [`7f9f97a`](https://github.com/npm/bin-links/commit/7f9f97ae2a41bd1ffea516993971b6291b5b0aca) [#187](https://github.com/npm/bin-links/pull/187) normalize bin metadata in getPaths (@martinrrm, @Copilot)
+### Chores
+* [`a294d27`](https://github.com/npm/bin-links/commit/a294d270b4290aa2c3852b136c30018b159f18e5) [#180](https://github.com/npm/bin-links/pull/180) bump @npmcli/eslint-config from 6.0.1 to 7.0.0 (#180) (@dependabot[bot])
+* [`337c60f`](https://github.com/npm/bin-links/commit/337c60fc6429d1afd49c9373bc4ca5df76513c8c) [#184](https://github.com/npm/bin-links/pull/184) bump @npmcli/template-oss from 5.1.0 to 5.1.1 (#184) (@dependabot[bot], @npm-cli-bot)
+
 ## [7.0.0](https://github.com/npm/bin-links/compare/v6.0.0...v7.0.0) (2026-05-15)
 ### ⚠️ BREAKING CHANGES
 * `bin-links` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
