@@ -59,7 +59,9 @@ t.test('failure to close is ignored', async t => {
     ...fs.promises,
     open: async (...args) => {
       const fh = await fs.promises.open(...args)
+      const close = fh.close.bind(fh)
       fh.close = async () => {
+        await close()
         throw new Error('witaf')
       }
       return fh
