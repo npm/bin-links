@@ -1,5 +1,9 @@
 # Changelog
 
+## [6.0.3](https://github.com/npm/bin-links/compare/v6.0.2...v6.0.3) (2026-10-12)
+### Bug Fixes
+* [`e6c3b86`](https://github.com/npm/bin-links/commit/e6c3b86ec8c89ae1c47d7e88e0667498549cc75a) [#189](https://github.com/npm/bin-links/pull/189) normalize bin metadata in getPaths (@martinrrm, @Copilot)
+
 ## [6.0.2](https://github.com/npm/bin-links/compare/v6.0.1...v6.0.2) (2026-05-20)
 ### Bug Fixes
 * [`cc26d31`](https://github.com/npm/bin-links/commit/cc26d31bb32fbf6d7a5e716d9effb6153bfc828d) [#182](https://github.com/npm/bin-links/pull/182) update ci nodejs version (#182) (@owlstronaut)
