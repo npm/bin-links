@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.0.3](https://github.com/npm/bin-links/compare/v6.0.2...v6.0.3) (2026-10-26)
+### Bug Fixes
+* [`e6c3b86`](https://github.com/npm/bin-links/commit/e6c3b86ec8c89ae1c47d7e88e0667498549cc75a) [#189](https://github.com/npm/bin-links/pull/189) normalize bin metadata in getPaths (@martinrrm, @Copilot)
+### Chores
+* [`444919d`](https://github.com/npm/bin-links/commit/444919d7f0daebbb4f8d4d631a2345e9bc143173) [#194](https://github.com/npm/bin-links/pull/194) refresh v6 generated configuration (#194) (@martinrrm, @Copilot)
+* [`e3db85d`](https://github.com/npm/bin-links/commit/e3db85d422b70dd7ec669f20123bde849c31267f) [#191](https://github.com/npm/bin-links/pull/191) close FileHandle in close failure test (#190) (@martinrrm, @Copilot)
+* [`539acb0`](https://github.com/npm/bin-links/commit/539acb0e474d37a8df3c7800762ddea228170e78) [#191](https://github.com/npm/bin-links/pull/191) configure v6 maintenance releases (@martinrrm)
+
 ## [6.0.2](https://github.com/npm/bin-links/compare/v6.0.1...v6.0.2) (2026-05-20)
 ### Bug Fixes
 * [`cc26d31`](https://github.com/npm/bin-links/commit/cc26d31bb32fbf6d7a5e716d9effb6153bfc828d) [#182](https://github.com/npm/bin-links/pull/182) update ci nodejs version (#182) (@owlstronaut)
