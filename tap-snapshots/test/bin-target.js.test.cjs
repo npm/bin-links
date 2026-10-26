@@ -5,18 +5,18 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
-exports[`test/bin-target.js TAP posix > not top 1`] = `
+exports[`test/bin-target.js > TAP > posix > not top 1`] = `
 /path/to/node_modules/.bin
 `
 
-exports[`test/bin-target.js TAP posix > top (and thus global) 1`] = `
+exports[`test/bin-target.js > TAP > posix > top (and thus global) 1`] = `
 /path/bin
 `
 
-exports[`test/bin-target.js TAP win32 > not top 1`] = `
+exports[`test/bin-target.js > TAP > win32 > not top 1`] = `
 /path/to/node_modules/.bin
 `
 
-exports[`test/bin-target.js TAP win32 > top (and thus global) 1`] = `
+exports[`test/bin-target.js > TAP > win32 > top (and thus global) 1`] = `
 /path/to
 `
