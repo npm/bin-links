@@ -5,18 +5,18 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
-exports[`test/man-target.js TAP posix > not top 1`] = `
+exports[`test/man-target.js > TAP > posix > not top 1`] = `
 null
 `
 
-exports[`test/man-target.js TAP posix > top (and thus global) 1`] = `
+exports[`test/man-target.js > TAP > posix > top (and thus global) 1`] = `
 /path/share/man
 `
 
-exports[`test/man-target.js TAP win32 > not top 1`] = `
+exports[`test/man-target.js > TAP > win32 > not top 1`] = `
 null
 `
 
-exports[`test/man-target.js TAP win32 > top (and thus global) 1`] = `
+exports[`test/man-target.js > TAP > win32 > top (and thus global) 1`] = `
 null
 `

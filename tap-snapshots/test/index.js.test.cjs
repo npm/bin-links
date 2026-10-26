@@ -5,7 +5,7 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
-exports[`test/index.js TAP posix global nested force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > nested > force=false > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/usr/local/lib/node_modules/xyz/node_modules/@foo/bar",
@@ -21,7 +21,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global nested force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > nested > force=false > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/usr/local/lib/node_modules/xyz/node_modules/foo",
@@ -37,7 +37,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global nested force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > nested > force=true > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/usr/local/lib/node_modules/xyz/node_modules/@foo/bar",
@@ -53,7 +53,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global nested force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > nested > force=true > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/usr/local/lib/node_modules/xyz/node_modules/foo",
@@ -69,7 +69,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global top force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > top > force=false > scoped pkg 1`] = `
 Object {
   "force": false,
   "path": "/usr/local/lib/node_modules/@foo/bar",
@@ -85,7 +85,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global top force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > top > force=false > unscoped pkg 1`] = `
 Object {
   "force": false,
   "path": "/usr/local/lib/node_modules/foo",
@@ -101,7 +101,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global top force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > top > force=true > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/usr/local/lib/node_modules/@foo/bar",
@@ -117,7 +117,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix global top force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > global > top > force=true > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/usr/local/lib/node_modules/foo",
@@ -133,7 +133,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix local nested force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > nested > force=false > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/path/to/project/node_modules/@foo/bar",
@@ -149,7 +149,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix local nested force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > nested > force=false > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/path/to/project/node_modules/foo",
@@ -165,7 +165,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix local nested force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > nested > force=true > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/path/to/project/node_modules/@foo/bar",
@@ -181,7 +181,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix local nested force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > nested > force=true > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "/path/to/project/node_modules/foo",
@@ -197,23 +197,23 @@ Object {
 }
 `
 
-exports[`test/index.js TAP posix local top force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > top > force=false > scoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP posix local top force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > top > force=false > unscoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP posix local top force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > top > force=true > scoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP posix local top force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > posix > local > top > force=true > unscoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP win32 global nested force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > nested > force=false > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\xyz\\\\node_modules\\\\@foo/bar",
@@ -229,7 +229,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global nested force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > nested > force=false > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\xyz\\\\node_modules\\\\foo",
@@ -245,7 +245,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global nested force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > nested > force=true > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\xyz\\\\node_modules\\\\@foo/bar",
@@ -261,7 +261,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global nested force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > nested > force=true > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\xyz\\\\node_modules\\\\foo",
@@ -277,7 +277,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global top force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > top > force=false > scoped pkg 1`] = `
 Object {
   "force": false,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\@foo/bar",
@@ -293,7 +293,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global top force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > top > force=false > unscoped pkg 1`] = `
 Object {
   "force": false,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\foo",
@@ -309,7 +309,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global top force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > top > force=true > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\@foo/bar",
@@ -325,7 +325,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 global top force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > global > top > force=true > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\prefix\\\\node_modules\\\\foo",
@@ -341,7 +341,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 local nested force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > nested > force=false > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\project\\\\node_modules\\\\@foo/bar",
@@ -357,7 +357,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 local nested force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > nested > force=false > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\project\\\\node_modules\\\\foo",
@@ -373,7 +373,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 local nested force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > nested > force=true > scoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\project\\\\node_modules\\\\@foo/bar",
@@ -389,7 +389,7 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 local nested force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > nested > force=true > unscoped pkg 1`] = `
 Object {
   "force": true,
   "path": "c:\\\\path\\\\to\\\\project\\\\node_modules\\\\foo",
@@ -405,18 +405,18 @@ Object {
 }
 `
 
-exports[`test/index.js TAP win32 local top force=false > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > top > force=false > scoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP win32 local top force=false > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > top > force=false > unscoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP win32 local top force=true > scoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > top > force=true > scoped pkg 1`] = `
 undefined
 `
 
-exports[`test/index.js TAP win32 local top force=true > unscoped pkg 1`] = `
+exports[`test/index.js > TAP > win32 > local > top > force=true > unscoped pkg 1`] = `
 undefined
 `
