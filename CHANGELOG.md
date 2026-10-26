@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.0.1](https://github.com/npm/bin-links/compare/v5.0.0...v5.0.1) (2026-10-26)
+### Bug Fixes
+* [`56a0734`](https://github.com/npm/bin-links/commit/56a0734b7636a816c43d8bd024e9f02c6bc5508c) [#193](https://github.com/npm/bin-links/pull/193) normalize bin metadata in getPaths (@martinrrm, @Copilot)
+### Chores
+* [`1384505`](https://github.com/npm/bin-links/commit/1384505c39da9ec49187164d31cbf54bf6eae93a) [#193](https://github.com/npm/bin-links/pull/193) configure v5 maintenance releases (@martinrrm, @Copilot)
+
 ## [5.0.0](https://github.com/npm/bin-links/compare/v4.0.4...v5.0.0) (2024-09-25)
 ### ⚠️ BREAKING CHANGES
 * `bin-links` now supports node `^18.17.0 || >=20.5.0`
